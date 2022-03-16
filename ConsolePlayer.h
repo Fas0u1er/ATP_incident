@@ -1,0 +1,10 @@
+#ifndef ATP_INCIDENT_CONSOLEPLAYER_H
+#define ATP_INCIDENT_CONSOLEPLAYER_H
+
+
+class ConsolePlayer {
+
+};
+
+
+#endif //ATP_INCIDENT_CONSOLEPLAYER_H
