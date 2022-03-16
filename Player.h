@@ -4,6 +4,8 @@
 
 class Player {
 
+public:
+    virtual ~Player() = 0;
 };
 
 

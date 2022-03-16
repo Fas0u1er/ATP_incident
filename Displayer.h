@@ -1,0 +1,10 @@
+#ifndef ATP_INCIDENT_DISPLAYER_H
+#define ATP_INCIDENT_DISPLAYER_H
+
+
+class Displayer {
+
+};
+
+
+#endif //ATP_INCIDENT_DISPLAYER_H

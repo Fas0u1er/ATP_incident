@@ -1,9 +1,11 @@
 #ifndef ATP_INCIDENT_CONSOLEPLAYER_H
 #define ATP_INCIDENT_CONSOLEPLAYER_H
+#include "Player.h"
 
+class ConsolePlayer : public Player {
 
-class ConsolePlayer {
-
+public:
+    ~ConsolePlayer() override = default;
 };
 
 
