@@ -12,13 +12,17 @@ class GameMaster {
     vector<unique_ptr<Player> > players;
     Displayer& displayer;
 
-    explicit GameMaster(Displayer& displayer);
     void menu();
     void menu_Play();
     void menu_Settings();
     void menu_Exit();
     void play_FillBoards();
-    void countPlayers();
+    void play_SetPlayers();
     void play_DoTurns();
+    void countPlayers();
+
+public:
+    explicit GameMaster(Displayer& displayer);
+    void run();
 
 };

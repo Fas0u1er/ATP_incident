@@ -5,6 +5,12 @@ set(CMAKE_CXX_STANDARD 20)
 add_subdirectory(ConsoleLibrary)
 add_executable(ATP_incident
         main.cpp
+        GameMaster.cpp
+        Settings.cpp
+        ConsolePlayer.cpp
+        Ship.cpp
+        Board.cpp
+        Cell.cpp
         )
 
 target_link_libraries(ATP_incident CONSOLE_LIBRARY)

@@ -1,7 +1,5 @@
 #include "GameMaster.h"
 
-GameMaster::GameMaster(Displayer& displayer) : displayer(displayer) {};
-
 void GameMaster::menu() {
     /*
      * Options:
@@ -9,7 +7,7 @@ void GameMaster::menu() {
      * Settings
      * Exit
      */
-    auto displayer.displayMenu();
+
 }
 
 
@@ -29,5 +27,19 @@ void GameMaster::play_DoTurns() {
 
 }
 void GameMaster::countPlayers() {
+
+}
+
+GameMaster::GameMaster(Displayer& displayer) : players(), displayer(displayer) {
+
+}
+
+void GameMaster::run() {
+    //main game process management
+
+}
+
+
+void GameMaster::play_SetPlayers() {
 
 }
