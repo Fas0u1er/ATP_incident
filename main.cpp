@@ -1,10 +1,12 @@
 #include <iostream>
-#include "Board.h"
-#include "Cell.h"
-#include "ConsolePlayer.h"
-#include "Ship.h"
-
+//#include "Board.h"
+//#include "Cell.h"
+//#include "GameMaster.h"
+//#include "ConsolePlayer.h"
+//#include "Ship.h"
+#include "ConsoleLibrary/Displayer.h"
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    Derived b;
+    std::cout << sizeof(Derived);
+
 }

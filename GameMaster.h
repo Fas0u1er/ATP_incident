@@ -1,0 +1,24 @@
+#pragma once
+#include "Player.h"
+#include "ConsoleLibrary/Displayer.h"
+#include "Settings.h"
+#include "Board.h"
+#include "vector"
+#include "memory"
+
+using std::vector;
+using std::unique_ptr;
+class GameMaster {
+    vector<unique_ptr<Player> > players;
+    Displayer& displayer;
+
+    explicit GameMaster(Displayer& displayer);
+    void menu();
+    void menu_Play();
+    void menu_Settings();
+    void menu_Exit();
+    void play_FillBoards();
+    void countPlayers();
+    void play_DoTurns();
+
+};

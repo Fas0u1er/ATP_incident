@@ -1,10 +1,9 @@
-#ifndef ATP_INCIDENT_CELL_H
-#define ATP_INCIDENT_CELL_H
-
+#pragma once
 
 class Cell {
+    enum CellState {
 
+    };
 };
 
 
-#endif //ATP_INCIDENT_CELL_H
