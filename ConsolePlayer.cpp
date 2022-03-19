@@ -1,13 +1,12 @@
 #include "ConsolePlayer.h"
 
-void ConsolePlayer::fillBoard(int shipsNumber) {
-    GUI_Interface& gui = GUI_Interface::getInstance();
+void ConsolePlayer::fillBoard(GUI_Interface& gui, int shipsNumber) {
     for(int i = 0; i < shipsNumber; ++i) {
-
+        gui.getShipPos()
     }
 }
 
-void ConsolePlayer::attack(Board* enemyBoardPtr) {
+void ConsolePlayer::attack(GUI_Interface&, Board* enemyBoardPtr) {
 
 }
 

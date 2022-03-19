@@ -1,7 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "GUI_Interface.h"
-#include "Settings.h"
+#include "Global_Settings.h"
 #include "vector"
 #include "memory"
 #include "Board.h"

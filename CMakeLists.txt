@@ -6,7 +6,6 @@ add_subdirectory(ConsoleLibrary)
 add_executable(ATP_incident
         main.cpp
         GameMaster.cpp
-        Settings.cpp
         ConsolePlayer.cpp
         "Ship and Cell.cpp"
         Board.cpp
