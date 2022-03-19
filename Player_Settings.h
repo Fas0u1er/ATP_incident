@@ -3,8 +3,10 @@
 
 using std::vector;
 
-class Player_Settings {
-    int shipNumber = 6;
+struct Player_Settings {
+    int shipsNumber = 6;
     vector<int> shipSize = {1, 1, 2, 2, 3, 4};
+    int boardWidth = 8;
+    int boardHeight = 8;
 };
 

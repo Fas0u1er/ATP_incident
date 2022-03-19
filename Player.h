@@ -3,17 +3,19 @@
 #include "Board.h"
 #include "GUI_Interface.h"
 #include "Ship and Cell.h"
+#include "Global_Settings.h"
 
 
 
 struct Player {
     Board board;
     int playerIdx;
-    Player(int width, int height, int idx) : board(width, height), playerIdx(idx) {}
+    Player(int idx) : board(Global_Settings::getInstance().playerSettings[idx].boardWidth,
+                            Global_Settings::getInstance().playerSettings[idx].boardHeight), playerIdx(idx) {}
 
-    virtual void fillBoard(GUI_Interface&, int shipNumber) = 0;
+    virtual void fillBoard(GUI_Interface&) = 0;
 
-    virtual void attack(GUI_Interface&, Board* enemyBoardPtr) = 0;
+    virtual void attack(GUI_Interface&, Board& enemyBoard) = 0;
 
     virtual ~Player() = default;
 };

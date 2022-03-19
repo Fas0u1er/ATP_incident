@@ -4,9 +4,9 @@
 struct ConsolePlayer : public Player {
 public:
 
-    void fillBoard(GUI_Interface&, int shipsNumber) override;
+    void fillBoard(GUI_Interface&) override;
 
-    void attack(GUI_Interface&, Board* enemyBoardPtr) override;
+    void attack(GUI_Interface&, Board& enemyBoard) override;
 
 
     ~ConsolePlayer() override = default;
