@@ -7,6 +7,7 @@
 #include "Board.h"
 #include "Player.h"
 #include "Simplest_GUI.h"
+#include "Position.h"
 
 using std::vector;
 using std::string;
@@ -91,36 +92,41 @@ public:
 
     //Returns {bottom-left corner, upper-right corner}
     pair<pair<int, int>, pair<int, int>> placeShip(const Board& board, int length) {
-        cout << "Write coordinates of bottom-left corner of the ship (column, then row)" << endl;
-        pair<int, int> blPosition;
-        blPosition.first = getInt();
-        blPosition.second = getInt();
-        cout << "Now write direction (WASD)" << endl;
-        static std::vector<char> valid({'W', 'A', 'S', 'D'});
-        char cdirection = getChar(valid);
-        pair<int, int> direction;
-        switch (cdirection) {
-            case 'W': direction = {0, 1};
-                break;
-            case 'A': direction = {-1, 0};
-                break;
-            case 'S': direction = {0, -1};
-                break;
-            case 'D': direction = {1, 0};
-                break;
-            default: assert(false);
+        pair<pair<int, int>, pair<int, int>> answer;
+        while (true) {
+            cout << "Write coordinates of bottom-left corner of the ship (column, then row)" << endl;
+            pair<int, int> blPosition;
+            blPosition.first = getInt();
+            blPosition.second = getInt();
+            cout << "Now write direction (WD)" << endl;
+            static std::vector<char> valid({'W', 'D'});
+            char cdirection = getChar(valid);
+            pair<int, int> direction;
+            switch (cdirection) {
+                case 'W': direction = {0, 1};
+                    break;
+                case 'D': direction = {1, 0};
+                    break;
+                default: assert(false);
+            }
+            answer = {blPosition,
+                      {blPosition.first + direction.first * length,
+                       blPosition.second + direction.second * length}};
+            for (pair<int, int> pos = blPosition; blPosition != answer.second;
+                 pos.first += direction.first, pos.second += direction.second) {
+
+            }
         }
-        return {blPosition,
-                {blPosition.first + direction.first * length,
-                 blPosition.second + direction.second * length}};
+        return answer;
     }
 
-    pair <int, int> getAttack(const Player& player, const Board& attackedBoard) {
+    pair<int, int> getAttack(const Player& player, const Board& attackedBoard) {
         cout << "Player " << player.index << " attack!" << endl;
         while (true) {
             int x, y;
             x = getInt();
             y = getInt();
+            if ()
         }
     }
 

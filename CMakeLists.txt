@@ -11,6 +11,7 @@ add_executable(ATP_incident
         "Ship and Cell.cpp"
         Board.cpp
         Simplest_GUI.cpp
+        Position.cpp
         )
 
 target_link_libraries(ATP_incident CONSOLE_LIBRARY)
