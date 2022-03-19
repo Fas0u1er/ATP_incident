@@ -1,20 +1,25 @@
 #include "Board.h"
 
-int Board::shipCount() {
-    return false;
+void Board::addShip(int lx, int ly, int rx, int ry) {
+    Ship toAdd(this, &cells[lx][ly], &cells[rx][ry]);
+    ships.push_back(toAdd);
 }
 
-
-void Board::addShip(int lx, int ly, int rx, int ry) {
-
+int Board::allShipCount() {
+    return ships.size();
 }
 
 int Board::deadShipCount() {
-    return 0;
+    int cnt = 0;
+    for (const auto& ship : ships) {
+        if (ship.state == Ship::State::dead)
+            ++cnt;
+    }
+    return cnt;
 }
 
-void Board::attack(int, int) {
-
+void Board::attack(int x, int y) {
+    cells[x][y].attack();
 }
 
 Board::Board(int width, int height) :
@@ -26,4 +31,8 @@ Board::Board(int width, int height) :
             cells[i][j].y_cord = i;
         }
     }
+}
+
+Cell& Board::cellRef(int x, int y) {
+    return cells[x][y];
 }
