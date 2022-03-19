@@ -1,7 +1,7 @@
 #pragma once
 #include "Board.h"
 #include "Settings.h"
-#include "Ship.h"
+#include "Ship and Cell.h"
 
 
 class Player {

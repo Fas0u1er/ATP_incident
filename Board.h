@@ -1,7 +1,6 @@
 #pragma once
 #include "vector"
-#include "Ship.h"
-#include "Cell.h"
+#include "Ship and Cell.h"
 
 using std::vector;
 
@@ -14,8 +13,10 @@ public:
     Board(int width, int height);
     void addShip(int, int, int, int);//four coordinates (l.x, l.y, r.x, r.y)
 
-    int shipCount();
+    int allShipCount();
     int deadShipCount();
+
+    Cell& cellRef(int x, int y);
 
     void attack(int, int);// two coordinates
 };

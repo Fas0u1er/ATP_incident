@@ -8,9 +8,8 @@ add_executable(ATP_incident
         GameMaster.cpp
         Settings.cpp
         ConsolePlayer.cpp
-        Ship.cpp
+        "Ship and Cell.cpp"
         Board.cpp
-        Cell.cpp
         )
 
 target_link_libraries(ATP_incident CONSOLE_LIBRARY)

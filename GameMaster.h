@@ -4,6 +4,7 @@
 #include "Settings.h"
 #include "vector"
 #include "memory"
+#include "Board.h"
 
 using std::vector;
 using std::unique_ptr;
