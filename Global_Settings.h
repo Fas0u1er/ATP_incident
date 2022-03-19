@@ -12,6 +12,6 @@ struct Global_Settings {
     }
 
 private:
-    Global_Settings() = default;
+    Global_Settings(): playerSettings(2) {}
 };
 
