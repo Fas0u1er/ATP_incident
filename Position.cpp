@@ -1,6 +1,3 @@
-//
-// Created by Simon on 19.03.2022.
-//
 
 #include "Position.h"
 Position& Position::operator+=(const Position& other) {

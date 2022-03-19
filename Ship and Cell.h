@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Position.h"
 #include <vector>
 
 using std::vector;
@@ -36,8 +36,7 @@ struct Cell {
     State state = sea;
     Ship* shipPtr = nullptr;
     Board* boardPtr = nullptr;
-    int x_cord = 0;
-    int y_cord = 0;
+    Position pos = {0, 0};
 
     void attack();
 };

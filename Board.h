@@ -2,6 +2,7 @@
 
 #include "vector"
 #include "Ship and Cell.h"
+#include "Position.h"
 
 using std::vector;
 
@@ -12,11 +13,11 @@ struct Board {
     vector<vector<Cell>> cells;
     Board(int width, int height);
 
-    void addShip(int, int, int, int);//four coordinates (l.x, l.y, r.x, r.y)
+    void addShip(Position, Position);//two coordinates (begin, end)
 
     int allShipCount();
 
     int deadShipCount();
 
-    void attack(int, int);// two coordinates
+    void attack(Position);// coordinates of attack
 };

@@ -5,16 +5,19 @@ Board::Board(int width, int height) :
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
             cells[i][j].boardPtr = this;
-            cells[i][j].x_cord = j;
-            cells[i][j].y_cord = i;
+            cells[i][j].pos = {j, i};
         }
     }
 }
 
-void Board::addShip(int lx, int ly, int rx, int ry) {
+void Board::addShip(Position begin, Position end) {
     vector<Cell*> vCell;
-    for (int i = lx; i <= rx; ++i) {
-        for (int j = ly; j <= ry; ++j) {
+
+    if(begin.x > end.x or begin.y > end.y)
+        std::swap(begin, end);
+
+    for (int i = begin.x; i <= end.x; ++i) {
+        for (int j = begin.y; j <= end.y; ++j) {
             vCell.push_back(&cells[i][j]);
         }
     }
@@ -34,7 +37,7 @@ int Board::deadShipCount() {
     return cnt;
 }
 
-void Board::attack(int x, int y) {
-    cells[x][y].attack();
+void Board::attack(Position toAttack) {
+    cells[toAttack.x][toAttack.y].attack();
 }
 

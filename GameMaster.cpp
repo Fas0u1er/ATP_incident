@@ -30,13 +30,9 @@ void GameMaster::countPlayers() {
 
 }
 
-GameMaster::GameMaster(GUI_Interface& displayer) : players(), displayer(displayer) {
-
-}
+GameMaster::GameMaster(GUI_Interface& gui) : players(), gui(gui) {}
 
 void GameMaster::run() {
-    //main game process management
-
 }
 
 

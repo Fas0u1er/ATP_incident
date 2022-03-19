@@ -19,6 +19,9 @@ void Ship::updateState() {
 
     if (getHP() == 0) {
         state = dead;
+        for(auto* cellPtr:cells) {
+            cellPtr->state = Cell::State::deadShip;
+        }
         return;
     }
 
