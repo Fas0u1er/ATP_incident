@@ -30,7 +30,7 @@ void GameMaster::countPlayers() {
 
 }
 
-GameMaster::GameMaster(Displayer& displayer) : players(), displayer(displayer) {
+GameMaster::GameMaster(GUI_Interface& displayer) : players(), displayer(displayer) {
 
 }
 

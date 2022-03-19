@@ -10,6 +10,7 @@ add_executable(ATP_incident
         ConsolePlayer.cpp
         "Ship and Cell.cpp"
         Board.cpp
+        Simplest_GUI.cpp
         )
 
 target_link_libraries(ATP_incident CONSOLE_LIBRARY)
