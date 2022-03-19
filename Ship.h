@@ -1,10 +1,19 @@
-#ifndef ATP_INCIDENT_SHIP_H
-#define ATP_INCIDENT_SHIP_H
+#pragma once
+#include <vector>
+#include "Cell.h"
+#include "Board.h"
+using std::vector;
 
+struct Ship {
+    enum State {
+        untouched, attacked, dead
+    };
 
-class Ship {
+    Board* board;
+    vector<Cell*> cells;
+    State state = untouched;
 
+    int getSize();
+    Ship(Board*, Cell*, Cell*);
 };
 
-
-#endif //ATP_INCIDENT_SHIP_H

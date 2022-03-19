@@ -7,17 +7,14 @@
 class Player {
 protected:
     Board board;
-    Settings settings;
 public:
-    virtual void setSettings(const Settings&) = 0;
-    virtual void addShip(const Ship&) = 0;
-    virtual void removeShip(const Ship&) = 0;
-    virtual bool shipCount() = 0;
-    virtual void doTurn() = 0;
-    virtual const Board& getBoard() = 0;
-    virtual const Settings& getSettings() = 0;
+    explicit Player(int brdWidth, int brdHeight);
+    virtual void fillBoard(int shipsNumber) = 0;
+    virtual void attack(Board* enemyBoard) = 0;
 
     virtual ~Player() = 0;
 };
+
+Player::Player(int width, int height) : board(width, height) {}
 
 

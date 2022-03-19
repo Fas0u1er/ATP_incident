@@ -2,7 +2,6 @@
 #include "Player.h"
 #include "ConsoleLibrary/Displayer.h"
 #include "Settings.h"
-#include "Board.h"
 #include "vector"
 #include "memory"
 
@@ -11,6 +10,7 @@ using std::unique_ptr;
 class GameMaster {
     vector<unique_ptr<Player> > players;
     Displayer& displayer;
+
 
     void menu();
     void menu_Play();
