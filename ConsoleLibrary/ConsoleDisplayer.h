@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Displayer.h"
+#include "../GUI_Interface.h"
 
-class ConsoleDisplayer : public Displayer {
+class ConsoleDisplayer : public GUI_Interface {
 public:
-    void somePureVirtualMethod() override;
 };

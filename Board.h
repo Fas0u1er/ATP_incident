@@ -4,12 +4,11 @@
 
 using std::vector;
 
-class Board {
+struct Board {
     int width;
     int height;
     vector<Ship> ships;
     vector<vector<Cell>> cells;
-public:
     Board(int width, int height);
     void addShip(int, int, int, int);//four coordinates (l.x, l.y, r.x, r.y)
 

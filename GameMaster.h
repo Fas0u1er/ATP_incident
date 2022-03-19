@@ -1,6 +1,6 @@
 #pragma once
 #include "Player.h"
-#include "ConsoleLibrary/Displayer.h"
+#include "GUI_Interface.h"
 #include "Settings.h"
 #include "vector"
 #include "memory"
@@ -10,7 +10,7 @@ using std::vector;
 using std::unique_ptr;
 class GameMaster {
     vector<unique_ptr<Player> > players;
-    Displayer& displayer;
+    GUI_Interface& displayer;
 
 
     void menu();
@@ -23,7 +23,7 @@ class GameMaster {
     void countPlayers();
 
 public:
-    explicit GameMaster(Displayer& displayer);
+    explicit GameMaster(GUI_Interface& displayer);
     void run();
 
 };
