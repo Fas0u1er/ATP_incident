@@ -1,19 +1,19 @@
 #pragma once
 
 #include "Board.h"
-#include "Settings.h"
+#include "GUI_Interface.h"
 #include "Ship and Cell.h"
 
 
-class Player {
-protected:
+
+struct Player {
     Board board;
-public:
-    explicit Player(int width, int height) : board(width, height) {};
+    int idx;
+    Player(int width, int height, int idx) : board(width, height), idx(idx) {}
 
     virtual void fillBoard(int shipsNumber) = 0;
 
-    virtual void attack(Board* enemyBoard) = 0;
+    virtual void attack(Board* enemyBoardPtr) = 0;
 
     virtual ~Player() = 0;
 };

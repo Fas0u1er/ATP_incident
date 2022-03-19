@@ -1,8 +1,14 @@
 #pragma once
 #include "Player.h"
 
-class ConsolePlayer : public Player {
+struct ConsolePlayer : public Player {
 public:
+
+    void fillBoard(int shipsNumber) override;
+
+    void attack(Board* enemyBoardPtr) override;
+
+
     ~ConsolePlayer() override = default;
 };
 
