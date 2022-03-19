@@ -2,9 +2,9 @@
 #include "Global_Settings.h"
 
 void ConsolePlayer::fillBoard(GUI_Interface& gui) {
-    int shipsNumber = Global_Settings::getInstance().playerSettings[playerIdx].shipsNumber;
+    int shipsNumber = Global_Settings::getInstance().playerSettings[index].shipsNumber;
     for (int i = 0; i < shipsNumber; ++i) {
-        int shipLength = Global_Settings::getInstance().playerSettings[playerIdx].shipSize[i];
+        int shipLength = Global_Settings::getInstance().playerSettings[index].shipSize[i];
         auto shipCoordinates = gui.placeShip(board, shipLength);
         std::pair<int, int> shipBegin = shipCoordinates.first;
         std::pair<int, int> shipEnd = shipCoordinates.second;
@@ -13,7 +13,7 @@ void ConsolePlayer::fillBoard(GUI_Interface& gui) {
 }
 
 void ConsolePlayer::attack(GUI_Interface&, Board& enemyBoard) {
-    std::pair<int, int> attackCoordinates = gui.getAttack(enemyBoard);
+    std::pair<int, int> attackCoordinates = gui.getAttack(*this, enemyBoard);
     enemyBoard.attack(attackCoordinates.first, attackCoordinates.second);
 }
 

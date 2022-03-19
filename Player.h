@@ -9,9 +9,9 @@
 
 struct Player {
     Board board;
-    int playerIdx;
+    int index;
     Player(int idx) : board(Global_Settings::getInstance().playerSettings[idx].boardWidth,
-                            Global_Settings::getInstance().playerSettings[idx].boardHeight), playerIdx(idx) {}
+                            Global_Settings::getInstance().playerSettings[idx].boardHeight), index(idx) {}
 
     virtual void fillBoard(GUI_Interface&) = 0;
 
