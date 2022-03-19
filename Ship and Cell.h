@@ -1,31 +1,33 @@
 #pragma once
+
 #include <vector>
 
 using std::vector;
 
-class Board;
-struct Cell;
+struct Board;
 
+struct Cell;
+struct Ship;
 
 struct Ship {
-    Ship(Board*, Cell*, Cell*);
-
     enum State {
         untouched, attacked, dead
     };
 
-    Board* board;
     vector<Cell*> cells;
     State state = untouched;
 
     int getSize();
+
     void updateState();
+
     int getHP();
+
+    Ship(vector<Cell*>& cells);
 };
 
-
 struct Cell {
-    Cell(Board* board, int x, int y);
+    Cell() = default;
 
     enum State {
         sea, deadSea, ship, attackedShip, deadShip
@@ -39,4 +41,9 @@ struct Cell {
 
     void attack();
 };
+
+
+
+
+
 

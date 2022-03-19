@@ -1,27 +1,23 @@
 #include "Ship and Cell.h"
 
 int Ship::getSize() {
-    return 0;
+    return cells.size();
 }
 
-Ship::Ship(Board* board, Cell* begin, Cell* end) :
-        board(board), cells(), state(untouched) {
-    for(int i = begin->x_cord; i <= end->x_cord; ++i) {
-        for(int j = begin->y_cord; j <= end->y_cord; ++j) {
-            cells.push_back(&(board->cellRef(i, j)));
-            (board->cellRef(i, j)).shipPtr = this;
-            (board->cellRef(i, j)).state = Cell::State::ship;
-        }
+Ship::Ship(vector<Cell*>& cells) : cells(cells) {
+    for (auto* cellPtr : cells) {
+        cellPtr->state = Cell::State::ship;
+        cellPtr->shipPtr = this;
     }
 }
 
 void Ship::updateState() {
-    if(getSize() == getHP()) {
+    if (getSize() == getHP()) {
         state = untouched;
         return;
     }
 
-    if(getHP() == 0) {
+    if (getHP() == 0) {
         state = dead;
         return;
     }
@@ -31,14 +27,11 @@ void Ship::updateState() {
 
 int Ship::getHP() {
     int cnt = 0;
-    for (auto cellPtr:cells) {
-        if(cellPtr->state == Cell::State::ship)
+    for (auto cellPtr : cells) {
+        if (cellPtr->state == Cell::State::ship)
             ++cnt;
     }
-}
-
-Cell::Cell(Board*, int x, int y) {
-
+    return cnt;
 }
 
 void Cell::attack() {
