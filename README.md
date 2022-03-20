@@ -1,5 +1,5 @@
 # ATP_incident
-Battleship game (work in progress)
+Battleship game (work in progress) \
 Сделано:
 1) UML-диаграмма классов
 2) Реализована эта структура классов
