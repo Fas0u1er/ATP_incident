@@ -5,6 +5,7 @@
 #include "Position.h"
 
 using std::vector;
+using std::pair;
 
 struct Board {
     int width;
@@ -15,9 +16,13 @@ struct Board {
 
     void addShip(Position, Position);//two coordinates (begin, end)
 
-    int allShipCount();
+    int allShipCount() const;
 
     int deadShipCount();
 
     void attack(Position);// coordinates of attack
+
+    bool withinBorders(Position pos) const;
+
+    bool hasNoShipNeighbours(Position pos) const;
 };

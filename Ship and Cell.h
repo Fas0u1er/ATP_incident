@@ -29,11 +29,11 @@ struct Ship {
 struct Cell {
     Cell() = default;
 
-    enum State {
+    enum States {
         sea, deadSea, ship, attackedShip, deadShip
     };
 
-    State state = sea;
+    States state = sea;
     Ship* shipPtr = nullptr;
     Board* boardPtr = nullptr;
     Position pos = {0, 0};

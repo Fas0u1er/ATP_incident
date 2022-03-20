@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "GUI_Interface.h"
 #include "Global_Settings.h"
+#include "ConsolePlayer.h"
 #include "vector"
 #include "memory"
 #include "Board.h"
@@ -29,7 +30,7 @@ class GameMaster {
 
     void play_DoTurns();
 
-    void countPlayers();
+    int countPlayers();
 
 public:
     explicit GameMaster(GUI_Interface& gui);

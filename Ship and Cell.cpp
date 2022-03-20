@@ -6,7 +6,7 @@ int Ship::getSize() {
 
 Ship::Ship(vector<Cell*>& cells) : cells(cells) {
     for (auto* cellPtr : cells) {
-        cellPtr->state = Cell::State::ship;
+        cellPtr->state = Cell::States::ship;
         cellPtr->shipPtr = this;
     }
 }
@@ -20,7 +20,7 @@ void Ship::updateState() {
     if (getHP() == 0) {
         state = dead;
         for(auto* cellPtr:cells) {
-            cellPtr->state = Cell::State::deadShip;
+            cellPtr->state = Cell::States::deadShip;
         }
         return;
     }
@@ -31,7 +31,7 @@ void Ship::updateState() {
 int Ship::getHP() {
     int cnt = 0;
     for (auto cellPtr : cells) {
-        if (cellPtr->state == Cell::State::ship)
+        if (cellPtr->state == Cell::States::ship)
             ++cnt;
     }
     return cnt;

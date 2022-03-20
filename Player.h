@@ -1,17 +1,23 @@
 #pragma once
 
 #include "Board.h"
-#include "GUI_Interface.h"
 #include "Ship and Cell.h"
 #include "Global_Settings.h"
 
+#include "string"
+
+using std::string;
+
+struct GUI_Interface;
 
 
 struct Player {
     Board board;
     int index;
-    Player(int idx) : board(Global_Settings::getInstance().playerSettings[idx].boardWidth,
-                            Global_Settings::getInstance().playerSettings[idx].boardHeight), index(idx) {}
+    string name;
+
+    Player(int idx) : board(Global_Settings::getInstance().boardWidth,
+                            Global_Settings::getInstance().boardHeight), index(idx) {}
 
     virtual void fillBoard(GUI_Interface&) = 0;
 
@@ -21,3 +27,4 @@ struct Player {
 };
 
 
+#include "GUI_Interface.h"

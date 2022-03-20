@@ -9,16 +9,13 @@
 #include "Simplest_GUI.h"
 #include "Position.h"
 
-using std::vector;
-using std::string;
-using std::cout;
-using std::wcout;
-using std::pair;
 using std::endl;
 using std::cin;
 using std::left;
 using std::setw;
 using std::setfill;
+using std::cout;
+using std::wcout;
 
 class Simplest_GUI : public GUI_Interface {
 private:
@@ -26,6 +23,10 @@ private:
     template<typename T>
     void printElement(T t, const int& width) {
         cout << left << setw(width) << setfill(' ') << t;
+    }
+
+    static void wrongInput() {
+        cout << "Incorrect input. Try again" << endl;
     }
 
     static int getInt() {
@@ -38,28 +39,34 @@ private:
                 break;
             }
             catch (std::invalid_argument& s) {
-                cout << "Incorrect input. Try again" << endl;
+                wrongInput();
             }
         }
         return choice;
+    }
+
+    static Position getPosition() {
+        Position answer;
+        answer.x = getInt();
+        answer.y = getInt();
+        return answer;
     }
 
     static char getChar(const std::vector<char>& valid) {
-        char choice;
         while (true) {
+            char choice;
             cin >> choice;
             choice = toupper(choice);
             if (std::find(valid.begin(), valid.end(), choice) == valid.end()) {
-                cout << "Incorrect input. Try again" << endl;
+                wrongInput();
             } else {
-                break;
+                return choice;
             }
         }
-        return choice;
     }
 
 public:
-    void displayBoard(const Board& board, bool isMine) {
+    void displayBoard(const Board& board, bool isMine) override {
         for (int i = 0; i < board.height; ++i) {
             for (const auto& cell: board.cells[i]) {
                 wchar_t toPrint;
@@ -81,27 +88,29 @@ public:
         }
     }
 
-    int displayOptions(const vector<string>& options) {
+    int displayOptions(const vector<string>& options) override {
         for (int i = 1; i <= options.size(); ++i) {
             cout << i << ". " << options[i] << '\n';
         }
         cout << "Choose!\n";
-        int choice = getInt();
-        return choice;
+        while (true) {
+            int choice = getInt();
+            if (0 <= choice and choice < options.size())
+                return choice;
+            else
+                wrongInput();
+        }
     }
 
     //Returns {bottom-left corner, upper-right corner}
-    pair<pair<int, int>, pair<int, int>> placeShip(const Board& board, int length) {
-        pair<pair<int, int>, pair<int, int>> answer;
+    pair<Position, Position> placeShip(const Board& board, int length) override {
         while (true) {
             cout << "Write coordinates of bottom-left corner of the ship (column, then row)" << endl;
-            pair<int, int> blPosition;
-            blPosition.first = getInt();
-            blPosition.second = getInt();
+            Position blPosition = getPosition();
             cout << "Now write direction (WD)" << endl;
             static std::vector<char> valid({'W', 'D'});
             char cdirection = getChar(valid);
-            pair<int, int> direction;
+            Position direction;
             switch (cdirection) {
                 case 'W': direction = {0, 1};
                     break;
@@ -109,28 +118,37 @@ public:
                     break;
                 default: assert(false);
             }
-            answer = {blPosition,
-                      {blPosition.first + direction.first * length,
-                       blPosition.second + direction.second * length}};
-            for (pair<int, int> pos = blPosition; blPosition != answer.second;
-                 pos.first += direction.first, pos.second += direction.second) {
-
+            pair <Position, Position> answer = {blPosition,
+                      blPosition + direction * length};
+            bool isCorrectPlacement = true;
+            int amountOfChecks = length;
+            for (Position pos = blPosition; amountOfChecks--; pos += direction) {
+                if (not (board.withinBorders(pos) and board.hasNoShipNeighbours(pos))) {
+                    isCorrectPlacement = false;
+                    break;
+                }
+            }
+            if (isCorrectPlacement) {
+                return answer;
+            }
+            else {
+                wrongInput();
             }
         }
-        return answer;
     }
 
-    pair<int, int> getAttack(const Player& player, const Board& attackedBoard) {
+    Position getAttack(const Player& player, const Board& attackedBoard) override {
         cout << "Player " << player.index << " attack!" << endl;
         while (true) {
-            int x, y;
-            x = getInt();
-            y = getInt();
-            if ()
+            Position attackPosition = getPosition();
+            if (attackedBoard.withinBorders(attackPosition) and attackedBoard.cells[attackPosition.x][attackPosition.y].state == Cell::States::sea)
+                return attackPosition;
+            else
+                wrongInput();
         }
     }
 
-    void displayPlayer(const Player& player, bool isMine) {
+    void displayPlayer(const Player& player, bool isMine) override {
         displayBoard(player.board, isMine);
     }
 
