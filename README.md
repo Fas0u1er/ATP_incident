@@ -17,10 +17,12 @@
 ___
 Борис: 
 - Диаграмма классов
-- Player, Board, Ship & Cell, Settings
+- Player, Board, Ship & Cell, Settings 
+
 Семён: 
 - Дебажный GUI
 - GameMaster
 - Position
+
 Вдвоём: 
 - "Архитектура"
