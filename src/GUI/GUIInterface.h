@@ -1,7 +1,7 @@
 #pragma once
-#include "Position.h"
-#include "Player.h"
-#include "Board.h"
+#include "src/board/Position.h"
+#include "src/player/Player.h"
+#include "src/board/Board.h"
 
 #include "string"
 #include "vector"
@@ -10,7 +10,7 @@ using std::vector;
 using std::string;
 using std::pair;
 
-class GUI_Interface {
+class GUIInterface {
 private:
 
 public:
@@ -20,5 +20,5 @@ public:
     virtual Position getAttack(const Player& player, const Board& attackedBoard) = 0;
     virtual void displayPlayer(const Player& player, bool isMine) = 0;
 
-    virtual ~GUI_Interface() = default;
+    virtual ~GUIInterface() = default;
 };

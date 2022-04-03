@@ -4,10 +4,10 @@
 #include "cassert"
 #include "iomanip"
 
-#include "Board.h"
-#include "Player.h"
-#include "Simplest_GUI.h"
-#include "Position.h"
+#include "src/board/Board.h"
+#include "src/player/Player.h"
+#include "src/GUI/SimplestGUI.h"
+#include "src/board/Position.h"
 
 using std::endl;
 using std::cin;
@@ -17,7 +17,7 @@ using std::setfill;
 using std::cout;
 using std::wcout;
 
-class Simplest_GUI : public GUI_Interface {
+class SimplestGUI : public GUIInterface {
 private:
 
     template<typename T>

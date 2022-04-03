@@ -1,5 +1,5 @@
 
-#include "Position.h"
+#include "src/board/Position.h"
 Position& Position::operator+=(const Position& other) {
     x += other.x;
     y += other.y;
