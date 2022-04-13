@@ -2,29 +2,36 @@
 
 #include <vector>
 
-#include "src/board/Cell.h"
-#include "src/board/BoardBuilder.h"
+#include "Cell.h"
 #include "src/ship/Ship.h"
+
+class BoardBuilder;
+class Position;
+class GUIInterface;
+class SimplestGUI;
 
 class Board {
 public:
-    bool withinBorders(Position);
+    [[nodiscard]] bool withinBorders(Position) const;
 
     Cell* getCellPtr(Position);
 
-    void attack(Position);
+    bool attack(Position);
 
-    int shipCount();
+    [[nodiscard]] int shipCount() const;
 
     int deadShipCount();
 
-    std::vector<Ship>& getShips();
+    std::vector<Ship*>& getShips();
 
-    void insertShip(Ship&);
+    void insertShip(Ship*);
 private:
     friend BoardBuilder;
+    friend GUIInterface;
+    friend SimplestGUI;
+
     int width;
     int height;
-    std::vector<Ship> ships;
+    std::vector<Ship*> ships;
     std::vector<std::vector<Cell>> cells;
 };

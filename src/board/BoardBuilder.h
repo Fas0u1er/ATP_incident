@@ -1,9 +1,7 @@
 #pragma once
-#include "Board.h"
-#include "Cell.h"
-#include "src/player/Player.h"
-#include "src/settings/GlobalSettings.h"
 #include <vector>
+class Player;
+class Board;
 
 class BoardBuilder {
 public:
@@ -11,7 +9,7 @@ public:
 
     Board constructEmptyBoard();
 
-    static void fillShips(Player*, Board*);
+    void fillShips(Player*, Board*);
 
 private:
     BoardBuilder() = default;

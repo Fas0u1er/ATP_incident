@@ -1,10 +1,9 @@
 #pragma once
 
-#include "src/player/Player.h"
-#include "src/GUI/GUIInterface.h"
-#include "src/player/ConsolePlayer.h"
-
 #include <vector>
+
+class Player;
+class GUIInterface;
 
 using std::vector;
 
@@ -13,10 +12,9 @@ class GameMaster {
     GUIInterface& gui;
 public:
     explicit GameMaster(GUIInterface& gui);
-    void run();
-
-private:
     void openMenu();
-
+private:
     void runBattle();
+    void initializePlayers();
+    void showResults();
 };

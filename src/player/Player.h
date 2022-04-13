@@ -1,10 +1,13 @@
 #pragma once
 
-#include "src/GUI/GUIInterface.h"
-#include "src/board/BoardBuilder.h"
+#include <string>
+
 #include "src/board/Board.h"
-#include "src/settings/GlobalSettings.h"
-#include "src/board/Cell.h"
+#include "src/board/BoardBuilder.h"
+#include "src/ship/Ship.h"
+
+class PlayerFactory;
+class Position;
 
 class Player {
 public:
@@ -14,13 +17,18 @@ public:
     explicit Player(int idx) : index(idx),
                                board(BoardBuilder::getInstance().constructEmptyBoard()) {}
 
-    virtual void fillBoard() = 0;
+    void fillBoard();
 
     virtual std::vector<Cell*> getNewShipCells(Ship::Type, int size) = 0;
 
-    virtual void attack(Player* enemy) = 0;
 
-    virtual bool isAlive() = 0;
+    virtual bool attack(Player* enemy) = 0;
+
+    bool isAlive();
+
+    [[nodiscard]] std::string getName() const;
 
     virtual ~Player() = default;
+
+    friend PlayerFactory;
 };

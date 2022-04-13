@@ -1,4 +1,5 @@
 #include "Ship.h"
+#include "src/board/Cell.h"
 
 int Ship::getSize() {
     return cells.size();
@@ -6,7 +7,7 @@ int Ship::getSize() {
 
 int Ship::getHP() {
     int cnt = 0;
-    for (auto cellPtr : cells) {
+    for (auto cellPtr: cells) {
         if (cellPtr->getState() == Cell::State::ship)
             ++cnt;
     }
@@ -31,9 +32,9 @@ void Ship::updateState() {
         return;
     }
 
-    if (getHP() == 0) {
+    if (!isAlive()) {
         state = dead;
-        for(auto* cellPtr:cells) {
+        for (auto* cellPtr: cells) {
             cellPtr->state = Cell::State::deadShip;
         }
         return;
@@ -44,4 +45,13 @@ void Ship::updateState() {
 
 std::vector<Cell*> Ship::getCells() {
     return cells;
+}
+std::string Ship::typeToString(Ship::Type type) {
+    switch (type) {
+        case line: return "line";
+        case cross: return "cross";
+        case T: return "T";
+        case square: return "square";
+        default: throw std::logic_error("Unknown ship type in typeToString");
+    }
 }

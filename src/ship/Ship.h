@@ -1,8 +1,9 @@
 #pragma once
 #include <vector>
+#include <string>
 
-#include "src/board/Cell.h"
-#include "src/ship/ShipFactory.h"
+class ShipFactory;
+class Cell;
 
 class Ship {
 public:
@@ -11,8 +12,25 @@ public:
     };
 
     enum Type {
-        line, cross, T, square
+        line,
+        cross,
+        /* Size = one way length of ray
+           For example:
+            #
+           ###
+            #
+            Has size 1*/
+        T,
+        /* Size = (common length of both vertical and horizontal parts - 1) / 2
+           For example:
+            ###
+             #
+             #
+            Has size 1*/
+        square
     };
+
+    static std::string typeToString(Type);
 
     int getSize();
 

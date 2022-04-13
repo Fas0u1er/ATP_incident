@@ -1,8 +1,8 @@
 #pragma once
+#include "Position.h"
 
-#include "src/board/Board.h"
-#include "src/board/Position.h"
-#include "src/ship/Ship.h"
+class Board;
+class Ship;
 
 class Cell {
 public:
@@ -10,19 +10,23 @@ public:
         sea, deadSea, ship, attackedShip, deadShip
     };
 
+    Cell() = default;
+
     Cell(Board* brd, Position pos);
 
-    void attack();
+    bool attack();
 
     Position getPosition();
 
-    State getState();
+    [[nodiscard]] State getState() const;
 
-    bool isShip();
+    [[nodiscard]] bool isShip() const;
 
-    bool isFarFromShips();
+    [[nodiscard]] bool isFarFromShips() const;
 
-    void bindToShip(Ship&);
+    [[nodiscard]] bool isOkToAttack() const;
+
+    void bindToShip(Ship*);
 private:
     friend Ship;
 
