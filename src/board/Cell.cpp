@@ -1,6 +1,6 @@
 #include <stdexcept>
 #include "Cell.h"
-#include "src/ship/Ship.h"
+#include "src/ship/SimpleShip.h"
 #include "Board.h"
 
 Cell::Cell(Board* brd, Position pos) :
@@ -53,7 +53,7 @@ bool Cell::isFarFromShips() const {
     return true;
 }
 
-void Cell::bindToShip(Ship* ship) {
+void Cell::bindToShip(SimpleShip* ship) {
     shipPtr = ship;
     state = Cell::State::ship;
 }

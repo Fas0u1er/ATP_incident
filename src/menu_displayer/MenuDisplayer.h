@@ -1,17 +1,21 @@
 #pragma once
 
-class GUIInterface;
+class GUI;
+class PlayerSettings;
 
 class MenuDisplayer {
-    GUIInterface& gui;
+    GUI& gui;
 
 
     void exitMenu();
     void settingsMenu();
-    void globalSettings();
+    void globalSettingsMenu();
     void playerSpecificSettings();
-
+    void boardSettings();
+    void shipSettings();
+    void playerNumberSettings();
+    void alterPlayerSettings(PlayerSettings&);
 public:
-    explicit MenuDisplayer(GUIInterface& gui);
+    explicit MenuDisplayer(GUI& gui);
     void startingMenu();
 };

@@ -4,12 +4,12 @@
 #include "src/player/Player.h"
 #include "src/player/PlayerFactory.h"
 #include "src/menu_displayer/MenuDisplayer.h"
-#include "src/GUI/GUIInterface.h"
+#include "src/GUI/GUI.h"
 
-GameMaster::GameMaster(GUIInterface& gui) : gui(gui), players(GlobalSettings::getInstance().playerNumber) {}
+GameMaster::GameMaster(GUI& gui) : gui(gui), players(GlobalSettings::getInstance().playerNumber) {}
 
 void GameMaster::initializePlayers() {
-    auto globalSettings = GlobalSettings::getInstance();
+    auto& globalSettings = GlobalSettings::getInstance();
     auto playerFactory = PlayerFactory();
     for (int i = 0; i < globalSettings.playerNumber; ++i)
         players[i] = playerFactory.constructPlayer(globalSettings.playerSettings[i].type, &gui);

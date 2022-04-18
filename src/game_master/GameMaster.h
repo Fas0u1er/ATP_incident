@@ -3,15 +3,15 @@
 #include <vector>
 
 class Player;
-class GUIInterface;
+class GUI;
 
 using std::vector;
 
 class GameMaster {
     vector<Player*> players;
-    GUIInterface& gui;
+    GUI& gui;
 public:
-    explicit GameMaster(GUIInterface& gui);
+    explicit GameMaster(GUI& gui);
     void openMenu();
 private:
     void runBattle();

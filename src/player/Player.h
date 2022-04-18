@@ -4,7 +4,7 @@
 
 #include "src/board/Board.h"
 #include "src/board/BoardBuilder.h"
-#include "src/ship/Ship.h"
+#include "src/ship/SimpleShip.h"
 
 class PlayerFactory;
 class Position;
@@ -15,11 +15,11 @@ public:
     Board board;
 
     explicit Player(int idx) : index(idx),
-                               board(BoardBuilder::getInstance().constructEmptyBoard()) {}
+                               board(BoardBuilder::getInstance().constructEmptyRectangleBoard()) {}
 
     void fillBoard();
 
-    virtual std::vector<Cell*> getNewShipCells(Ship::Type, int size) = 0;
+    virtual std::vector<Cell*> getNewShipCells(SimpleShip::Type, int size) = 0;
 
 
     virtual bool attack(Player* enemy) = 0;

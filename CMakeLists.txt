@@ -20,8 +20,9 @@ add_executable(ATP_incident
         src/player/Player.cpp
         src/ship/Ship.cpp
         src/ship/ShipFactory.cpp
+        src/ship/SimpleShip.cpp
         src/main.cpp
-        )
+        src/settings/GlobalSettings.cpp src/settings/Setting.cpp src/settings/Setting.h)
 
 #target_link_libraries(ATP_incident CONSOLE_LIBRARY)
 target_include_directories(ATP_incident PUBLIC ${PROJECT_SOURCE_DIR})

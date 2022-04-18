@@ -9,7 +9,7 @@ class VeteranBot : public Bot {
 public:
 
 
-    std::vector<Cell*> getNewShipCells(Ship::Type, int size) override;
+    std::vector<Cell*> getNewShipCells(SimpleShip::Type, int size) override;
 
     bool attack(Player* enemy) override;
 friend PlayerFactory;

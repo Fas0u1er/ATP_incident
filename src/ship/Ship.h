@@ -1,6 +1,7 @@
 #pragma once
-#include <vector>
+
 #include <string>
+#include <vector>
 
 class ShipFactory;
 class Cell;
@@ -29,24 +30,24 @@ public:
             Has size 1*/
         square
     };
+    static const std::vector <std::string> typeToString;
+    virtual void updateState() = 0;
 
-    static std::string typeToString(Type);
+    [[nodiscard]] State getState() const;
 
-    int getSize();
+protected:
 
-    int getHP();
+    [[nodiscard]] int getSize() const;
 
-    bool isAlive();
+    [[nodiscard]] int getHP() const;
 
-    Type getType();
+    [[nodiscard]] bool isAlive() const;
 
-    State getState();
+    [[nodiscard]] Type getType() const;
 
-    void updateState();
 
-    std::vector<Cell*> getCells();
+    std::vector<Cell*>& getCells();
 
-private:
     friend ShipFactory;
     std::vector<Cell*> cells;
     State state;

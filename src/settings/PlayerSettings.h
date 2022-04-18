@@ -6,6 +6,6 @@ struct PlayerSettings {
         Human, RookieBot, VeteranBot, GodBot
     };
     std::string name;
-    Type type;
+    Type type = Type::Human;
 };
 

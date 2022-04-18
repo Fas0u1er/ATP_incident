@@ -1,6 +1,6 @@
 #pragma once
 
-#include "src/GUI/GUIInterface.h"
+#include "src/GUI/GUI.h"
 
 class ConsoleDisplayer : public GUIInterface {
 public:

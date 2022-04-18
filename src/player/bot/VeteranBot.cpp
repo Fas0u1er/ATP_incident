@@ -1,5 +1,5 @@
 #include "VeteranBot.h"
-std::vector<Cell*> VeteranBot::getNewShipCells(Ship::Type, int size) {
+std::vector<Cell*> VeteranBot::getNewShipCells(SimpleShip::Type, int size) {
     return {};
 }
 bool VeteranBot::attack(Player* enemy) {

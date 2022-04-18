@@ -1,5 +1,5 @@
 #pragma once
-#include "Ship.h"
+#include "SimpleShip.h"
 #include "src/board/Board.h"
 class Player;
 class Position;
@@ -10,7 +10,7 @@ class ShipFactory {
 public:
     static ShipFactory& getInstance();
 
-    Ship* constructShip(Player*, Ship::Type, int size);
+    Ship* constructSimpleShip(Player*, Ship::Type, int size);
 
     static std::vector<Cell*> convertPositioning(const std::vector<Position>& positions, Board& board);
 

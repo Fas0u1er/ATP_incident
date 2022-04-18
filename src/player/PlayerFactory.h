@@ -2,7 +2,7 @@
 
 #include "src/settings/PlayerSettings.h"
 
-class GUIInterface;
+class GUI;
 class Player;
 class PlayerFactory {
 private:
@@ -10,6 +10,6 @@ private:
 public:
     PlayerFactory() = default;
 
-    Player* constructPlayer(PlayerSettings::Type, GUIInterface*);
+    Player* constructPlayer(PlayerSettings::Type, GUI*);
 };
 

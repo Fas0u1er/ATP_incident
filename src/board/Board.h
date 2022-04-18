@@ -3,11 +3,11 @@
 #include <vector>
 
 #include "Cell.h"
-#include "src/ship/Ship.h"
+#include "src/ship/SimpleShip.h"
 
 class BoardBuilder;
 class Position;
-class GUIInterface;
+class GUI;
 class SimplestGUI;
 
 class Board {
@@ -27,11 +27,12 @@ public:
     void insertShip(Ship*);
 private:
     friend BoardBuilder;
-    friend GUIInterface;
+    friend GUI;
     friend SimplestGUI;
 
     int width;
     int height;
-    std::vector<Ship*> ships;
     std::vector<std::vector<Cell>> cells;
+    std::vector<Ship*> ships;
 };
+

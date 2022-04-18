@@ -17,7 +17,7 @@
 ___
 Борис: 
 - Диаграмма классов
-- Player, Board, Ship & Cell, Settings 
+- Player, Board, SimpleShip & Cell, Settings 
 
 Семён: 
 - Дебажный GUI

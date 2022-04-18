@@ -11,12 +11,12 @@ ShipFactory& ShipFactory::getInstance() {
     return instance;
 }
 
-Ship* ShipFactory::constructShip(Player* playerPtr, Ship::Type type, int size) {
+Ship* ShipFactory::constructSimpleShip(Player* playerPtr, Ship::Type type, int size) {
     /* Constructs the ship by asking the player*/
-    Ship* ship = new Ship();
+    auto* ship = new SimpleShip();
     auto shipCells = playerPtr->getNewShipCells(type, size);
     ship->cells = shipCells;
-    ship->state = Ship::State::untouched;
+    ship->state = SimpleShip::State::untouched;
     ship->type = type;
     for (auto cellPtr: ship->getCells()) {
         cellPtr->bindToShip(ship);

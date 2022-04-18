@@ -1,5 +1,5 @@
 #include "RookieBot.h"
-std::vector<Cell*> RookieBot::getNewShipCells(Ship::Type, int size) {
+std::vector<Cell*> RookieBot::getNewShipCells(SimpleShip::Type, int size) {
     return {};
 }
 bool RookieBot::attack(Player* enemy) {

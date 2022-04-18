@@ -2,7 +2,7 @@
 #include "Position.h"
 
 class Board;
-class Ship;
+class SimpleShip;
 
 class Cell {
 public:
@@ -26,12 +26,12 @@ public:
 
     [[nodiscard]] bool isOkToAttack() const;
 
-    void bindToShip(Ship*);
+    void bindToShip(SimpleShip*);
 private:
-    friend Ship;
+    friend SimpleShip;
 
     Board* boardPtr;
-    Ship* shipPtr;
+    SimpleShip* shipPtr;
     Position pos;
     State state;
 };

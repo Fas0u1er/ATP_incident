@@ -1,11 +1,14 @@
+#include <stdexcept>
+
 #include "Ship.h"
 #include "src/board/Cell.h"
 
-int Ship::getSize() {
+
+int Ship::getSize() const {
     return cells.size();
 }
 
-int Ship::getHP() {
+int Ship::getHP() const {
     int cnt = 0;
     for (auto cellPtr: cells) {
         if (cellPtr->getState() == Cell::State::ship)
@@ -14,44 +17,25 @@ int Ship::getHP() {
     return cnt;
 }
 
-bool Ship::isAlive() {
+bool Ship::isAlive() const {
     return getHP() != 0;
 }
 
-Ship::Type Ship::getType() {
+Ship::Type Ship::getType() const {
     return type;
 }
 
-Ship::State Ship::getState() {
+Ship::State Ship::getState() const {
     return state;
 }
 
-void Ship::updateState() {
-    if (getSize() == getHP()) {
-        state = untouched;
-        return;
-    }
-
-    if (!isAlive()) {
-        state = dead;
-        for (auto* cellPtr: cells) {
-            cellPtr->state = Cell::State::deadShip;
-        }
-        return;
-    }
-
-    state = attacked;
-}
-
-std::vector<Cell*> Ship::getCells() {
+std::vector<Cell*>& Ship::getCells() {
     return cells;
 }
-std::string Ship::typeToString(Ship::Type type) {
-    switch (type) {
-        case line: return "line";
-        case cross: return "cross";
-        case T: return "T";
-        case square: return "square";
-        default: throw std::logic_error("Unknown ship type in typeToString");
-    }
-}
+
+const std::vector <std::string> Ship::typeToString = {
+    "line",
+    "cross",
+    "T",
+    "square",
+};

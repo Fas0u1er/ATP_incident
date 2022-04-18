@@ -4,13 +4,14 @@
 #include "src/ship/ShipFactory.h"
 #include "Position.h"
 #include "Cell.h"
+#include "memory"
 
 BoardBuilder& BoardBuilder::getInstance() {
     static BoardBuilder instance;
     return instance;
 }
 
-Board BoardBuilder::constructEmptyBoard() {
+Board BoardBuilder::constructEmptyRectangleBoard() {
     Board board;
     board.width = GlobalSettings::getInstance().boardWidth;
     board.height = GlobalSettings::getInstance().boardHeight;
@@ -27,12 +28,12 @@ Board BoardBuilder::constructEmptyBoard() {
 }
 
 void BoardBuilder::fillShips(Player* player, Board* board) {
-    auto globalSettings = GlobalSettings::getInstance();
+    auto& globalSettings = GlobalSettings::getInstance();
     auto shipFactory = ShipFactory::getInstance();
-    for (int i = 0; i < globalSettings.shipsNumber; ++i) {
-        Ship* ship = shipFactory.constructShip(player,
-                                              globalSettings.shipTypes[i],
-                                              globalSettings.shipSize[i]);
-        board->insertShip(ship);
+    for (const auto& [type, sizes]: globalSettings.ships) {
+        for (auto size: sizes) {
+            Ship* ship = shipFactory.constructSimpleShip(player, type, size);
+            board->insertShip(ship);
+        }
     }
 }

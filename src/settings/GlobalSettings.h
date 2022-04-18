@@ -1,46 +1,33 @@
 #pragma once
 #include <vector>
+#include <unordered_map>
 #include <cassert>
+#include <iostream>
 
 #include "PlayerSettings.h"
-#include "src/ship/Ship.h"
+#include "src/ship/SimpleShip.h"
 
 class GlobalSettings {
 public:
     int boardWidth = 8;
     int boardHeight = 8;
-    int shipsNumber = 2;
-    std::vector<int> shipSize = {
-        1,
-//        1,
-//        1,
-//        1,
-        4
-    };
-    std::vector<Ship::Type> shipTypes = {
-        Ship::Type::line,
-//        Ship::Type::line,
-//        Ship::Type::line,
-//        Ship::Type::line,
-//        Ship::Type::line,
-      Ship::Type::square
-    };
+    int shipsNumber = 5;
+    std::unordered_map<Ship::Type, std::vector <int>> ships = {
+        {Ship::Type::line, {1, 1, 1, 1}},
+        {Ship::Type::square, {4}},
 
+    };
     int playerNumber = 2;
     std::vector<PlayerSettings> playerSettings;
 
-    static GlobalSettings& getInstance() {
-        static GlobalSettings obj;
-        return obj;
-    }
+    static GlobalSettings& getInstance();
 
+    void resize(int newPlayerNumber);
+    GlobalSettings(const GlobalSettings&) = delete;
+    GlobalSettings( GlobalSettings&&) = delete;
 private:
-    GlobalSettings() : playerSettings(playerNumber) {
-        assert(shipSize.size() == shipsNumber);
-        assert(shipTypes.size() == shipsNumber);
-        for (int i = 0; i < playerNumber; ++i) {
-            playerSettings[i].name = "Placeholder name #" + std::to_string(i + 1);
-        }
-    }
+    GlobalSettings();
+
+
 };
 

@@ -4,7 +4,7 @@
 #include "src/player/bot/GodBot.h"
 #include "src/player/HumanPlayer.h"
 
-Player* PlayerFactory::constructPlayer(PlayerSettings::Type skillLevel, GUIInterface* gui) {
+Player* PlayerFactory::constructPlayer(PlayerSettings::Type skillLevel, GUI* gui) {
     Player* result;
     switch (skillLevel) {
         case PlayerSettings::Type::RookieBot: result = new RookieBot(playerIndex++);

@@ -1,5 +1,5 @@
 #include "GodBot.h"
-std::vector<Cell*> GodBot::getNewShipCells(Ship::Type, int size) {
+std::vector<Cell*> GodBot::getNewShipCells(SimpleShip::Type, int size) {
     return {};
 }
 bool GodBot::attack(Player* enemy) {
