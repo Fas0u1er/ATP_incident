@@ -50,6 +50,11 @@ void GameMaster::runBattle() {
 void GameMaster::showResults() {
     gui.clearScreen();
     std::cout << "Showing results" << std::endl;
+    for (auto playerPtr :players) {
+        if(playerPtr->isAlive())
+            std::cerr << playerPtr->index << "\n";
+    }
     system("pause");
+    system("sleep 1");
     //TODO
 }

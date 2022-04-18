@@ -75,9 +75,9 @@ void SimplestGUI::displayBoard(const Board& board, bool isMine) {
                     break;
                 case Cell::deadSea:toPrint = 'O';
                     break;
-                case Cell::ship:toPrint = isMine ? 'K' : '~';
+                case Cell::ship:toPrint = isMine ? '#' : '~';
                     break;
-                case Cell::attackedShip:toPrint = 'A';
+                case Cell::attackedShip:toPrint = '*';
                     break;
                 case Cell::deadShip:toPrint = 'X';
                     break;

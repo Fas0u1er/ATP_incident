@@ -9,16 +9,30 @@
 
 class GlobalSettings {
 public:
-    int boardWidth = 8;
-    int boardHeight = 8;
-    int shipsNumber = 5;
+    int boardWidth = 10;
+    int boardHeight = 10;
+    int shipsNumber = 4;
     std::unordered_map<Ship::Type, std::vector <int>> ships = {
-        {Ship::Type::line, {1, 1, 1, 1}},
-        {Ship::Type::square, {4}},
-
+            {Ship::Type::line, {1, 2}},
+            {Ship::Type::square, {4}},
+            {Ship::Type::T, {2}}
     };
     int playerNumber = 2;
-    std::vector<PlayerSettings> playerSettings;
+    std::vector<PlayerSettings> playerSettings{{"rookie", PlayerSettings::Type::Human},
+                                               {"A", PlayerSettings::Type::GodBot}};
+
+
+    //    int boardWidth = 8;
+//    int boardHeight = 8;
+//    int shipsNumber = 5;
+//    std::unordered_map<Ship::Type, std::vector <int>> ships = {
+//        {Ship::Type::line, {1, 1, 1, 1}},
+//        {Ship::Type::square, {4}},
+//
+//    };
+//    int playerNumber = 2;
+
+//    std::vector<PlayerSettings> playerSettings;
 
     static GlobalSettings& getInstance();
 
