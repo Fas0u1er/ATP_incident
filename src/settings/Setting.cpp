@@ -28,6 +28,8 @@ bool ConcreteSetting<int>::parseFromInput(std::stringstream& input) {
     if (!input.eof()) {
         std::string temp;
         input >> temp;
+        if (temp.empty())
+            return false;
         try {
             value = std::stoi(temp);
             return true;
@@ -56,6 +58,8 @@ bool ConcreteSetting<std::vector<int>>::parseFromInput(std::stringstream& input)
     while (!input.eof()) {
         std::string temp;
         input >> temp;
+        if (temp.empty())
+            break;
         try {
             result.push_back(std::stoi(temp));
         }
