@@ -13,6 +13,7 @@ add_executable(ATP_incident
         src/GUI/SimplestGUI.cpp
         src/menu_displayer/MenuDisplayer.cpp
         src/player/PlayerFactory.cpp
+        src/player/bot/Bot.cpp
         src/player/bot/GodBot.cpp
         src/player/bot/RookieBot.cpp
         src/player/bot/VeteranBot.cpp

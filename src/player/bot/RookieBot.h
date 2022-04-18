@@ -1,6 +1,8 @@
 #pragma once
 
 #include "src/player/bot/Bot.h"
+#include "src/ship/ShipFactory.h"
+#include "src/settings/GlobalSettings.h"
 class PlayerFactory;
 
 class RookieBot : public Bot {

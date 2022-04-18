@@ -78,3 +78,26 @@ std::vector<Position> ShipFactory::generateCrossShip(Position center, int size) 
     }
     return positions;
 }
+
+std::vector<Position> ShipFactory::generateShipCells(Ship::Type type, Position upperLeft,
+                                                     int size, Position direction  = {0, 1}) {
+    std::vector<Position> position;
+    switch (type) {
+        case Ship::line:
+            position = ShipFactory::generateLineShip(upperLeft, direction, size);
+            break;
+        case Ship::T:
+            position = ShipFactory::generateTShip(upperLeft, direction, size);
+            break;
+        case Ship::square:
+            position = ShipFactory::generateSquareShip(upperLeft, size);
+            break;
+        case Ship::cross:
+            position = ShipFactory::generateCrossShip(upperLeft, size);
+            break;
+        default:
+            throw std::logic_error("Unknown ship type");
+    }
+
+    return position;
+}
