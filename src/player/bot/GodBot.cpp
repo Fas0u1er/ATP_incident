@@ -7,7 +7,7 @@ std::vector<Cell*> GodBot::getNewShipCells(SimpleShip::Type type, int size) {
                                                   Position(0, -1), Position(-1, 0)};
         Position dir = directions[get_randint(directions.size())];
         auto shipCells = ShipFactory::convertPositioning(
-                ShipFactory::generateShipCells(type, upperLeft, size, dir), board);
+                ShipFactory::generateShipCells(type, upperLeft, size, dir), *board);
         if (!shipCells.empty())
             return shipCells;
     }
@@ -17,12 +17,12 @@ bool GodBot::attack(Player* enemy) {
 
     std::vector<Position> best;
     if(godBlessing == 0) {
-        best = chooseShipCells(enemy->board);
+        best = chooseShipCells(*(enemy->board));
     } else {
-        best = VeteranBot::chooseBestAttacks(enemy->board);
+        best = VeteranBot::chooseBestAttacks(*(enemy->board));
     }
 
-    return enemy->board.attack(best[get_randint(best.size())]);
+    return enemy->board->attack(best[get_randint(best.size())]);
 }
 
 

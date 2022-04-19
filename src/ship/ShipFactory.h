@@ -1,10 +1,10 @@
 #pragma once
 #include "SimpleShip.h"
-#include "src/board/Board.h"
+#include "src/board/RectangleBoard.h"
 class Player;
 class Position;
 class Cell;
-class Board;
+class RectangleBoard;
 
 class ShipFactory {
 public:

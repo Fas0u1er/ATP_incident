@@ -1,9 +1,9 @@
 #include <stdexcept>
 #include "Cell.h"
 #include "src/ship/SimpleShip.h"
-#include "Board.h"
+#include "RectangleBoard.h"
 
-Cell::Cell(Board* brd, Position pos) :
+Cell::Cell(RectangleBoard* brd, Position pos) :
     boardPtr(brd), shipPtr(nullptr), pos(pos), state(sea) {}
 
 bool Cell::attack() {
@@ -23,6 +23,7 @@ bool Cell::attack() {
             state = deadSea;
             return false;
         }
+        default: throw std::logic_error("Tried to attack unknown type of cell");
     }
 }
 

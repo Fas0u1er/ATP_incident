@@ -3,7 +3,7 @@
 #include "ShipFactory.h"
 #include "src/player/Player.h"
 #include "src/board/Cell.h"
-#include "src/board/Board.h"
+#include "src/board/RectangleBoard.h"
 #include "src/board/Position.h"
 
 ShipFactory& ShipFactory::getInstance() {

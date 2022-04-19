@@ -6,6 +6,7 @@
 #include "iomanip"
 
 #include "GUI.h"
+#include "src/board/Board.h"
 
 class Position;
 class Player;
@@ -37,7 +38,7 @@ public:
 
     int displayOptions(const std::string& title, const std::vector<std::string>& options) override;
 
-    Position getAttack(const Player& player, const Board& attackedBoard) override;
+    Position getAttack(const Player& player, Board* attackedBoard) override;
 
     void displayPlayer(const Player& player, bool isMine) override;
 

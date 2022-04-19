@@ -94,7 +94,7 @@ void MenuDisplayer::playerSpecificSettings() {
 
 void MenuDisplayer::globalSettingsMenu() {
     static std::vector<std::string> options{
-        "Board settings",
+        "RectangleBoard settings",
         "Ships",
         "Number of players",
         "Go back",
@@ -132,7 +132,7 @@ void MenuDisplayer::boardSettings() {
     settings.emplace_back(
         new ConcreteSetting<int>("Width", globalSettings.boardWidth)
     );
-    gui.displaySettings("Board settings:", settings);
+    gui.displaySettings("RectangleBoard settings:", settings);
 }
 
 void MenuDisplayer::shipSettings() {
