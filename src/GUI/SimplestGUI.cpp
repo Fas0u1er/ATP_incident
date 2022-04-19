@@ -1,15 +1,15 @@
 #include "SimplestGUI.h"
 #include "src/board/Position.h"
 #include "src/board/Cell.h"
-#include "src/board/Board.h"
+#include "src/board/RectangleBoard.h"
 #include "src/settings/GlobalSettings.h"
 #include "src/player/Player.h"
 #include "src/ship/ShipFactory.h"
 #include "src/settings/Setting.h"
+
 #include <sstream>
-#include <functional>
 #include <cstdlib>
-#include <any>
+#include <algorithm>
 
 using std::endl;
 using std::cin;
@@ -102,18 +102,18 @@ int SimplestGUI::displayOptions(const std::string& title, const std::vector<std:
             wrongInput(false);
     }
 }
-Position SimplestGUI::getAttack(const Player& player, const Board& attackedBoard) {
+Position SimplestGUI::getAttack(const Player& player, Board* attackedBoard) {
     clearScreen();
     cout << "Enemy board" << endl;
     //Todo replace attacked board with attacked player
-    displayBoard(attackedBoard, false);
+    displayBoard(*attackedBoard, false);
     cout << "Your board" << endl;
-    displayBoard(player.board, true);
+    displayBoard(*(player.board), true);
     cout << "Player " << player.getName() << " attack! (first row, then column)" << endl;
     while (true) {
         Position attackPosition = get0IndexedPosition();
-        if (attackedBoard.withinBorders(attackPosition)
-            and attackedBoard.cells[attackPosition.x][attackPosition.y].isOkToAttack())
+        if (attackedBoard->withinBorders(attackPosition)
+            and attackedBoard->cells[attackPosition.x][attackPosition.y].isOkToAttack())
             return attackPosition;
         else
             wrongInput(false);
@@ -124,7 +124,7 @@ void SimplestGUI::displayPlayer(const Player& player, bool isMine) {
 }
 std::vector<Cell*> SimplestGUI::placeShip(Player& player, SimpleShip::Type type, int size) {
     clearScreen();
-    displayBoard(player.board, true);
+    displayBoard(*player.board, true);
     cout << "Player " << player.getName() << " place a ship" << endl;
     cout << "Type: " << Ship::typeToString[type] << endl;
     cout << "Size: " << size << endl;
@@ -133,15 +133,10 @@ std::vector<Cell*> SimplestGUI::placeShip(Player& player, SimpleShip::Type type,
         positions.clear();
         if (type == SimpleShip::Type::T ||
             type == SimpleShip::Type::cross) {
+            //Cross or T
             Position center;
-            do {
-                cout << "Write coordinates of the center of the ship (first row, then column)" << endl;
-                center = get0IndexedPosition();
-                if (player.board.withinBorders(center))
-                    break;
-                else
-                    wrongInput(false);
-            } while (true);
+            cout << "Write coordinates of the center of the ship (first row, then column)" << endl;
+            center = get0IndexedPosition();
 
             if (type == SimpleShip::Type::cross) {
                 //Cross
@@ -153,7 +148,7 @@ std::vector<Cell*> SimplestGUI::placeShip(Player& player, SimpleShip::Type type,
                 positions = ShipFactory::generateTShip(center, direction, size);
             }
         } else {
-            //Square
+            //Square or Line
             cout << "Write coordinates of upper-left corner of the ship (first row, then column)" << endl;
             Position upperLeft = get0IndexedPosition();
             if (type == SimpleShip::Type::square) {
@@ -173,7 +168,7 @@ std::vector<Cell*> SimplestGUI::placeShip(Player& player, SimpleShip::Type type,
             std::cerr << el << endl;
         } //DEBUG
 
-        auto result = ShipFactory::convertPositioning(positions, player.board);
+        auto result = ShipFactory::convertPositioning(positions, *player.board);
         if (!result.empty()) {
             return result;
         } else {

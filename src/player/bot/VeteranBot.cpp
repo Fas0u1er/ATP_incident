@@ -9,20 +9,20 @@ std::vector<Cell*> VeteranBot::getNewShipCells(SimpleShip::Type type, int size) 
                                                   Position(0, -1), Position(-1, 0)};
         Position dir = directions[get_randint(directions.size())];
         auto shipCells = ShipFactory::convertPositioning(
-                ShipFactory::generateShipCells(type, upperLeft, size, dir), board);
+                ShipFactory::generateShipCells(type, upperLeft, size, dir), *board);
         if (!shipCells.empty())
             return shipCells;
     }
 }
 
 bool VeteranBot::attack(Player* enemy) {
-    auto best = chooseBestAttacks(enemy->board);
-    return enemy->board.attack(best[get_randint(best.size())]);
+    auto best = chooseBestAttacks(*(enemy->board));
+    return enemy->board->attack(best[get_randint(best.size())]);
 }
 
 VeteranBot::VeteranBot(int index) : Bot(index) {}
 
-std::vector<Position> VeteranBot::chooseBestAttacks(Board& boardToAttack) {
+std::vector<Position> VeteranBot::chooseBestAttacks(Board& board) {
     const int INF = 1'000;
     int height = GlobalSettings::getInstance().boardHeight;
     int width = GlobalSettings::getInstance().boardWidth;
@@ -35,18 +35,18 @@ std::vector<Position> VeteranBot::chooseBestAttacks(Board& boardToAttack) {
 
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            if (!boardToAttack.getCellPtr(Position(i, j))->isOkToAttack()) {
+            if (!board.getCellPtr(Position(i, j))->isOkToAttack()) {
                 continue;
             }
 
             int attackPriority = 0 - static_cast<int>(i == 0) - static_cast<int>(j == 0);
             for (auto dir : directions) {
                 auto neighbour = dir + Position{i, j};
-                if (!boardToAttack.withinBorders(neighbour)) {
+                if (!board.withinBorders(neighbour)) {
                     continue;
                 }
 
-                switch (boardToAttack.getCellPtr(neighbour)->getState()) {
+                switch (board.getCellPtr(neighbour)->getState()) {
                     case (Cell::deadShip):
                         attackPriority -= INF;
                         break;

@@ -1,7 +1,7 @@
 #pragma once
 #include "Position.h"
 
-class Board;
+class RectangleBoard;
 class SimpleShip;
 
 class Cell {
@@ -12,7 +12,7 @@ public:
 
     Cell() = default;
 
-    Cell(Board* brd, Position pos);
+    Cell(RectangleBoard* brd, Position pos);
 
     bool attack();
 
@@ -30,7 +30,7 @@ public:
 private:
     friend SimpleShip;
 
-    Board* boardPtr;
+    RectangleBoard* boardPtr;
     SimpleShip* shipPtr;
     Position pos;
     State state;

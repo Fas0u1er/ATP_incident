@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "src/board/Board.h"
+#include "src/board/RectangleBoard.h"
 #include "src/board/BoardBuilder.h"
 #include "src/ship/SimpleShip.h"
 
@@ -12,7 +12,7 @@ class Position;
 class Player {
 public:
     int index;
-    Board board;
+    std::unique_ptr <Board> (board);
 
     explicit Player(int idx) : index(idx),
                                board(BoardBuilder::getInstance().constructEmptyRectangleBoard()) {}

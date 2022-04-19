@@ -1,5 +1,5 @@
 #include "BoardBuilder.h"
-#include "Board.h"
+#include "RectangleBoard.h"
 #include "src/settings/GlobalSettings.h"
 #include "src/ship/ShipFactory.h"
 #include "Position.h"
@@ -11,19 +11,18 @@ BoardBuilder& BoardBuilder::getInstance() {
     return instance;
 }
 
-Board BoardBuilder::constructEmptyRectangleBoard() {
-    Board board;
-    board.width = GlobalSettings::getInstance().boardWidth;
-    board.height = GlobalSettings::getInstance().boardHeight;
-    board.ships = {};
-    board.cells = std::vector<std::vector<Cell>>(board.height, std::vector<Cell>(board.width));
+std::unique_ptr <Board> BoardBuilder::constructEmptyRectangleBoard() {
+    auto board = std::make_unique<RectangleBoard>();
+    board->width = GlobalSettings::getInstance().boardWidth;
+    board->height = GlobalSettings::getInstance().boardHeight;
+    board->ships = {};
+    board->cells = std::vector<std::vector<Cell>>(board->height, std::vector<Cell>(board->width));
 
-    for (int i = 0; i < board.height; ++i) {
-        for (int j = 0; j < board.width; ++j) {
-            board.cells[i][j] = Cell(&board, {i, j});
+    for (int i = 0; i < board->height; ++i) {
+        for (int j = 0; j < board->width; ++j) {
+            board->cells[i][j] = Cell(board.get(), {i, j});
         }
     }
-
     return board;
 }
 

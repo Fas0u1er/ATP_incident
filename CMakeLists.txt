@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.16)
 project(ATP_incident)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static -static-libgcc")
 set(CMAKE_CXX_STANDARD 20)
 #add_subdirectory(ConsoleLibrary)
 add_executable(ATP_incident
-        src/board/Board.cpp
+        src/board/RectangleBoard.cpp
         src/board/BoardBuilder.cpp
         src/board/Cell.cpp
         src/board/Position.cpp
@@ -23,7 +23,7 @@ add_executable(ATP_incident
         src/ship/ShipFactory.cpp
         src/ship/SimpleShip.cpp
         src/main.cpp
-        src/settings/GlobalSettings.cpp src/settings/Setting.cpp src/settings/Setting.h)
+        src/settings/GlobalSettings.cpp src/settings/Setting.cpp src/settings/Setting.h src/board/Board.cpp src/board/Board.h)
 
 #target_link_libraries(ATP_incident CONSOLE_LIBRARY)
 target_include_directories(ATP_incident PUBLIC ${PROJECT_SOURCE_DIR})
