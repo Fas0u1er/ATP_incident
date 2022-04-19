@@ -3,14 +3,13 @@
 Bot::Bot(int index) : Player(index),
                       gen(std::random_device()()) {}
 
-Position Bot::get_random_cell() {
-    int i = get_randint(GlobalSettings::getInstance().boardHeight);
-    int j = get_randint(GlobalSettings::getInstance().boardWidth);
+Position Bot::getRandomCell() {
+    int i = getRandint(GlobalSettings::getInstance().boardHeight);
+    int j = getRandint(GlobalSettings::getInstance().boardWidth);
     return {i, j};
 }
 
-int Bot::get_randint(int range) {
-    std::uniform_int_distribution<> distrib(0, range - 1);
-    return distrib(gen);
+int Bot::getRandint(int range) {
+    return std::uniform_int_distribution<> (0, range - 1)(gen);
 }
 

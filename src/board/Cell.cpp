@@ -3,8 +3,8 @@
 #include "src/ship/SimpleShip.h"
 #include "RectangleBoard.h"
 
-Cell::Cell(RectangleBoard* brd, Position pos) :
-    boardPtr(brd), shipPtr(nullptr), pos(pos), state(sea) {}
+Cell::Cell(Board* board, Position pos) :
+    boardPtr(board), shipPtr(nullptr), pos(pos), state(sea) {}
 
 bool Cell::attack() {
     switch (state) {
@@ -43,12 +43,9 @@ bool Cell::isShip() const {
 }
 
 bool Cell::isFarFromShips() const {
-    for (int xShift: {-1, 0, 1}) {
-        for (int yShift: {-1, 0, 1}) {
-            Position neigh = pos + Position{xShift, yShift};
-            if (boardPtr->withinBorders(neigh) && boardPtr->getCellPtr(neigh)->isShip()) {
-                return false;
-            }
+    for (auto neigh: getNeighbours()) {
+        if (boardPtr->getCellPtr(neigh)->isShip()) {
+            return false;
         }
     }
     return true;
@@ -63,3 +60,18 @@ bool Cell::isOkToAttack() const {
         state == Cell::State::ship or
             state == Cell::State::sea;
 }
+
+
+std::vector<Position> Cell::getNeighbours() const {
+    std::vector<Position> result;
+    for (int xShift: {-1, 0, 1}) {
+        for (int yShift: {-1, 0, 1}) {
+            Position neigh = pos + Position{xShift, yShift};
+            if (boardPtr->withinBorders(neigh)) {
+                result.push_back(neigh);
+            }
+        }
+    }
+    return result;
+}
+

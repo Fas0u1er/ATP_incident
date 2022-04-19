@@ -13,6 +13,7 @@ void GameMaster::initializePlayers() {
     auto playerFactory = PlayerFactory();
     for (int i = 0; i < globalSettings.playerNumber; ++i)
         players[i] = playerFactory.constructPlayer(globalSettings.playerSettings[i].type, &gui);
+    //TODO: Maybe tell the user when bot fills his board, so you can decide if he is stuck?
 }
 
 void GameMaster::openMenu() {
@@ -52,7 +53,7 @@ void GameMaster::showResults() {
     std::cout << "Showing results" << std::endl;
     for (auto playerPtr :players) {
         if(playerPtr->isAlive())
-            std::cerr << playerPtr->index << "\n";
+            std::cerr << playerPtr->getName() << " won!\n";
     }
     system("pause");
     system("sleep 1");

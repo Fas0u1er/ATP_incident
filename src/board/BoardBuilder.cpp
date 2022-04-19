@@ -16,11 +16,12 @@ std::unique_ptr <Board> BoardBuilder::constructEmptyRectangleBoard() {
     board->width = GlobalSettings::getInstance().boardWidth;
     board->height = GlobalSettings::getInstance().boardHeight;
     board->ships = {};
-    board->cells = std::vector<std::vector<Cell>>(board->height, std::vector<Cell>(board->width));
+    board->cells = std::vector<std::vector<Cell>>(board->height);
 
     for (int i = 0; i < board->height; ++i) {
+        board->cells.reserve(board->width);
         for (int j = 0; j < board->width; ++j) {
-            board->cells[i][j] = Cell(board.get(), {i, j});
+            board->cells[i].emplace_back(board.get(), Position(i, j));
         }
     }
     return board;

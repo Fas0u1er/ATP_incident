@@ -1,7 +1,10 @@
 #pragma once
+
+#include <vector>
+
 #include "Position.h"
 
-class RectangleBoard;
+class Board;
 class SimpleShip;
 
 class Cell {
@@ -10,9 +13,7 @@ public:
         sea, deadSea, ship, attackedShip, deadShip
     };
 
-    Cell() = default;
-
-    Cell(RectangleBoard* brd, Position pos);
+    Cell(Board* board, Position pos);
 
     bool attack();
 
@@ -27,10 +28,12 @@ public:
     [[nodiscard]] bool isOkToAttack() const;
 
     void bindToShip(SimpleShip*);
+
+    std::vector <Position> getNeighbours() const;
 private:
     friend SimpleShip;
 
-    RectangleBoard* boardPtr;
+    Board* boardPtr;
     SimpleShip* shipPtr;
     Position pos;
     State state;

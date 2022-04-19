@@ -26,6 +26,6 @@ public:
     //Returns correctly placed ship, represented by a vector of cells
     virtual void clearScreen() = 0;
     virtual void displaySettings(const std::string& title, std::vector<Setting*>&) = 0;
-    // Given list of pairs {label, vector <int>} presents them to the user and allows to change them
+    // Given list of settings presents them to the user and allows to change them
     virtual ~GUI() = default;
 };
