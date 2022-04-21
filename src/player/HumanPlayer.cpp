@@ -7,7 +7,7 @@ HumanPlayer::HumanPlayer(int index, GUI* gui) : Player(index), gui(gui) {}
 
 
 bool HumanPlayer::attack(Player* enemy) {
-    Position attackCoordinates = gui->getAttack(*this, enemy->board.get());
+    Position attackCoordinates = gui->getAttack(*this, *enemy);
     return enemy->board->attack(attackCoordinates);
 }
 

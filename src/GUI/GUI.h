@@ -20,7 +20,7 @@ private:
 public:
     virtual int displayOptions(const std::string& title, const std::vector<std::string>& options) = 0;
     virtual void displayBoard(const Board& board, bool isMine) = 0;
-    virtual Position getAttack(const Player& player, Board* attackedBoard) = 0;
+    virtual Position getAttack(const Player& player, Player& enemy) = 0;
     virtual void displayPlayer(const Player& player, bool isMine) = 0;
     virtual std::vector<Cell*> placeShip(Player& player, SimpleShip::Type type, int size) = 0;
     //Returns correctly placed ship, represented by a vector of cells

@@ -102,18 +102,17 @@ int SimplestGUI::displayOptions(const std::string& title, const std::vector<std:
             wrongInput(false);
     }
 }
-Position SimplestGUI::getAttack(const Player& player, Board* attackedBoard) {
+Position SimplestGUI::getAttack(const Player& player, Player& enemy) {
     clearScreen();
-    cout << "Enemy board" << endl;
-    //Todo replace attacked board with attacked player
-    displayBoard(*attackedBoard, false);
+    cout << enemy.getName() <<  "'s board" << endl;
+    displayBoard(*enemy.board, false);
     cout << "Your board" << endl;
     displayBoard(*(player.board), true);
     cout << "Player " << player.getName() << " attack! (first row, then column)" << endl;
     while (true) {
         Position attackPosition = get0IndexedPosition();
-        if (attackedBoard->withinBorders(attackPosition)
-            and attackedBoard->cells[attackPosition.x][attackPosition.y].isOkToAttack())
+        if (enemy.board->withinBorders(attackPosition)
+            and enemy.board->cells[attackPosition.x][attackPosition.y].isOkToAttack())
             return attackPosition;
         else
             wrongInput(false);
