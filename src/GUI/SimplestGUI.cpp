@@ -67,7 +67,15 @@ char SimplestGUI::getChar(const std::string& valid) {
 }
 
 void SimplestGUI::displayBoard(const Board& board, bool isMine) {
+
+    std::cout << " ";
+    for (int i = 0; i < board.width; ++i) {
+        std::cout << i + 1;
+    }
+    std::cout << "\n";
+
     for (int i = 0; i < board.height; ++i) {
+        std::cout << i + 1;
         for (const auto& cell: board.cells[i]) {
             wchar_t toPrint;
             switch (cell.getState()) {
@@ -241,4 +249,16 @@ void SimplestGUI::displaySettings(const std::string& title, std::vector<Setting*
             continue;
         }
     }
+}
+
+void SimplestGUI::showResults(const Player& winner, int roundsPlayed) {
+    std::cout <<"Results: \n";
+
+    std::cout << winner.getName() << " won after " + std::to_string(roundsPlayed) + " rounds\n";
+}
+
+void SimplestGUI::finishWork() {
+    std::cout << "Press enter to exit\n";
+
+    getNewLine();
 }

@@ -26,6 +26,8 @@ public:
     //Returns correctly placed ship, represented by a vector of cells
     virtual void clearScreen() = 0;
     virtual void displaySettings(const std::string& title, std::vector<Setting*>&) = 0;
+    virtual void showResults(const Player& winner, int roundsPlayed) = 0;
+    virtual void finishWork() = 0;
     // Given list of settings presents them to the user and allows to change them
     virtual ~GUI() = default;
 };

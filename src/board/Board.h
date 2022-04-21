@@ -25,6 +25,8 @@ public:
     std::vector<Ship*>& getShips();
 
     virtual void insertShip(Ship*) = 0;
+
+    virtual ~Board() = default;
 protected:
     friend BoardBuilder;
     friend GUI;
