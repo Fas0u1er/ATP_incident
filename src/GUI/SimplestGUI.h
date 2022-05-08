@@ -37,9 +37,7 @@ public:
 
     int displayOptions(const std::string& title, const std::vector<std::string>& options) override;
 
-    Position getAttack(const Player& player, Player& enemy) override;
-
-    void displayPlayer(const Player& player, bool isMine) override;
+    Position getAttack(const Player& player, const Player& enemy) override;
 
     std::vector<Cell*> placeShip(Player& player, SimpleShip::Type type, int size) override;
 

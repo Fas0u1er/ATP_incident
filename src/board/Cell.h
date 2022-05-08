@@ -31,7 +31,8 @@ public:
 
     void bindToShip(SimpleShip*);
 
-    std::vector <Position> getNeighbours() const;
+    std::vector<Position> getNeighbours() const;
+
 private:
     friend SimpleShip;
 

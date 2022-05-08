@@ -8,7 +8,7 @@ std::vector<Cell*> RookieBot::getNewShipCells(SimpleShip::Type type, int size) {
             for (auto dir : {Position(1, 0), Position(0, 1),
                              Position(0, -1), Position(-1, 0)}) {
                 auto shipCells = ShipFactory::convertPositioning(
-                        ShipFactory::generateShipCells(type, upperLeft, size, dir), board);
+                    ShipFactory::generateShipPositions(type, upperLeft, size, dir), *board);
                 if (!shipCells.empty())
                     return shipCells;
             }
@@ -21,10 +21,10 @@ std::vector<Cell*> RookieBot::getNewShipCells(SimpleShip::Type type, int size) {
 bool RookieBot::attack(Player* enemy) {
 
     while (true) {
-        auto toAttack = get_random_cell();
+        auto toAttack = getRandomCell();
 
-        if (enemy->board.getCellPtr(toAttack)->isOkToAttack()) {
-            return enemy->board.attack(toAttack);
+        if (enemy->board->getCellPtr(toAttack)->isOkToAttack()) {
+            return enemy->board->attack(toAttack);
         }
     }
 }

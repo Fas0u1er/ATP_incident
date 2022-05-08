@@ -32,7 +32,9 @@ add_executable(
         src/GUI/ExternalGUI/ButtonBase.cpp
         src/GUI/ExternalGUI/TextButton.cpp
         src/GUI/ExternalGUI/InputField.cpp
-        src/GUI/ExternalGUI/DisplayableBoard.cpp src/GUI/ExternalGUI/DisplayableBoard.h)
+        src/GUI/ExternalGUI/DisplayableBoard.cpp
+        src/GUI/ExternalGUI/DisplayableBoard.h
+)
 
 
 include(FetchContent)

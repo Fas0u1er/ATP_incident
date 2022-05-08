@@ -10,6 +10,8 @@ using std::vector;
 class GameMaster {
     vector<Player*> players;
     GUI& gui;
+    int roundsPlayed;
+
 public:
     explicit GameMaster(GUI& gui);
     void openMenu();

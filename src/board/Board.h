@@ -3,20 +3,20 @@
 #include <vector>
 
 #include "Cell.h"
-#include "src/ship/SimpleShip.h"
 
 class BoardBuilder;
 class Position;
 class GUI;
 class SimplestGUI;
+class Ship;
 
 class Board {
 public:
-    [[nodiscard]] bool withinBorders(Position) const;
+    [[nodiscard]] virtual bool withinBorders(Position) const = 0;
 
-    Cell* getCellPtr(Position);
+    virtual Cell* getCellPtr(Position) = 0;
 
-    bool attack(Position);
+    virtual bool attack(Position) = 0;
 
     [[nodiscard]] int shipCount() const;
 
@@ -24,8 +24,10 @@ public:
 
     std::vector<Ship*>& getShips();
 
-    void insertShip(Ship*);
-private:
+    virtual void insertShip(Ship*) = 0;
+
+    virtual ~Board() = default;
+protected:
     friend BoardBuilder;
     friend GUI;
     friend SimplestGUI;

@@ -18,8 +18,8 @@ public:
             {Ship::Type::T, {2}}
     };
     int playerNumber = 2;
-    std::vector<PlayerSettings> playerSettings{{"rookie", PlayerSettings::Type::Human},
-                                               {"A", PlayerSettings::Type::GodBot}};
+    std::vector<PlayerSettings> playerSettings{{"Human", PlayerSettings::Type::Human},
+                                               {"God Bot", PlayerSettings::Type::GodBot}};
 
 
     //    int boardWidth = 8;

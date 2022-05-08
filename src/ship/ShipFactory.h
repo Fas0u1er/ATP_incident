@@ -1,10 +1,10 @@
 #pragma once
 #include "SimpleShip.h"
-#include "src/board/Board.h"
+#include "src/board/RectangleBoard.h"
 class Player;
 class Position;
 class Cell;
-class Board;
+class RectangleBoard;
 
 class ShipFactory {
 public:
@@ -13,7 +13,7 @@ public:
     Ship* constructSimpleShip(Player*, Ship::Type, int size);
 
     static std::vector<Cell*> convertPositioning(const std::vector<Position>& positions, Board& board);
-    static std::vector <Position> generateShipCells(Ship::Type, Position upperLeft, int size, Position direction);
+    static std::vector <Position> generateShipPositions(Ship::Type type, Position upperLeft, int size, Position direction);
 
     static std::vector <Position> generateLineShip(Position upperLeft, Position direction, int size);
     static std::vector <Position> generateSquareShip(Position upperLeft, int size);
