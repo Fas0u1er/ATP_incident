@@ -158,9 +158,11 @@ void MenuDisplayer::alterPlayerSettings(PlayerSettings& playerSettings) {
     settings.emplace_back(new ConcreteSetting<std::string>("Name", playerSettings.name));
     int workaround = static_cast <int>(playerSettings.type);
     settings.emplace_back(new ConcreteSetting<int>(
-        "Type (0 for human, 1 for Rookie Bot, 2 for Veteran Bot, 3 for God Bot)",
+        "Type (0 for human, 1 for Rookie Bot,\n 2 for Veteran Bot, 3 for God Bot)",
         workaround));
+
     gui.displaySettings("Choose new name and a type for the player", settings);
+
     playerSettings.type = static_cast <PlayerSettings::Type> (workaround);
 
 }

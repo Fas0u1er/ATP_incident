@@ -21,5 +21,5 @@ struct Position {
     bool operator!=(const Position& other) const;
     bool operator==(const Position& other) const;
     friend std::ostream& operator<<(std::ostream& os, const Position& position);
-
+    Position& rotate(bool clockwise);
 };

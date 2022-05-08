@@ -6,13 +6,14 @@
 #include "src/menu_displayer/MenuDisplayer.h"
 #include "src/GUI/GUI.h"
 
-GameMaster::GameMaster(GUI& gui) : gui(gui), players(GlobalSettings::getInstance().playerNumber) {}
+GameMaster::GameMaster(GUI& gui) : gui(gui), players(GlobalSettings::getInstance().playerNumber), roundsPlayed(0) {}
 
 void GameMaster::initializePlayers() {
     auto& globalSettings = GlobalSettings::getInstance();
     auto playerFactory = PlayerFactory();
     for (int i = 0; i < globalSettings.playerNumber; ++i)
         players[i] = playerFactory.constructPlayer(globalSettings.playerSettings[i].type, &gui);
+    //TODO: Maybe tell the user when bot fills his board, so you can decide if he is stuck?
 }
 
 void GameMaster::openMenu() {
@@ -25,36 +26,40 @@ void GameMaster::openMenu() {
 void GameMaster::runBattle() {
     while (true) {
         int isAliveCnt = 0;
-        for (auto player: players) {
+        for (auto player : players) {
             if (player->isAlive())
                 ++isAliveCnt;
         }
         if (isAliveCnt <= 1)
             break;
+
         for (int attacker = 0; attacker < players.size(); ++attacker) {
             if (!players[attacker]->isAlive())
                 continue;
-            bool canAttack = true;
-            while (canAttack) {
-                canAttack = false;
-                for (int toAttack = 0; toAttack < players.size(); ++toAttack) {
-                    if (toAttack == attacker || !players[toAttack]->isAlive()) continue;
-                    canAttack = players[attacker]->attack(players[toAttack]);
+            bool canAttackAgain = true;
+            while (canAttackAgain) {
+                canAttackAgain = false;
+                for (int toAttack = (attacker + 1) % players.size(); toAttack != attacker;
+                     toAttack = (toAttack + 1) % players.size()) {
+                    if (!players[toAttack]->isAlive()) continue;
+
+                    canAttackAgain = players[attacker]->attack(players[toAttack]);
                     break;
-                    //Todo: arbitrary attack order
                 }
             }
         }
+
+        ++roundsPlayed;
     }
 }
+
 void GameMaster::showResults() {
-    gui.clearScreen();
-    std::cout << "Showing results" << std::endl;
-    for (auto playerPtr :players) {
-        if(playerPtr->isAlive())
-            std::cerr << playerPtr->index << "\n";
+    for (auto playerPtr : players) {
+        if (playerPtr->isAlive()) {
+            gui.showResults(*playerPtr, roundsPlayed);
+            gui.finishWork();
+            return;
+        }
     }
-    system("pause");
-    system("sleep 1");
-    //TODO
+
 }

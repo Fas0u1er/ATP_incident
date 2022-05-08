@@ -39,3 +39,12 @@ bool Position::operator!=(const Position& other) const {
 bool Position::operator==(const Position& other) const {
     return x == other.x and y == other.y;
 }
+Position& Position::rotate(bool clockwise) {
+    std::swap(x, y);
+    if (clockwise) {
+        y = -y;
+    } else {
+        x = -x;
+    }
+    return *this;
+}

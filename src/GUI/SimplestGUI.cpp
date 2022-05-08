@@ -1,30 +1,19 @@
 #include "SimplestGUI.h"
 #include "src/board/Position.h"
 #include "src/board/Cell.h"
-#include "src/board/Board.h"
+#include "src/board/RectangleBoard.h"
 #include "src/settings/GlobalSettings.h"
 #include "src/player/Player.h"
 #include "src/ship/ShipFactory.h"
 #include "src/settings/Setting.h"
+
 #include <sstream>
-#include <functional>
 #include <cstdlib>
-#include <any>
+#include <algorithm>
 
-using std::endl;
-using std::cin;
-using std::left;
-using std::setw;
-using std::setfill;
-using std::cout;
-using std::wcout;
 
-template<typename T>
-void SimplestGUI::printElement(T t, const int& width) {
-    cout << left << setw(width) << setfill(' ') << t;
-}
 void SimplestGUI::wrongInput(bool waitForEnter) {
-    cout << "Incorrect input. Try again" << endl;
+    std::cout << "Incorrect input. Try again" << std::endl;
     if (waitForEnter) {
         systemPause();
     }
@@ -32,7 +21,7 @@ void SimplestGUI::wrongInput(bool waitForEnter) {
 int SimplestGUI::getInt() {
     std::string choice_string;
     while (true) {
-        cin >> choice_string;
+        std::cin >> choice_string;
         try {
             int choice = std::stoi(choice_string);
             return choice;
@@ -56,7 +45,7 @@ Position SimplestGUI::get0IndexedPosition() {
 char SimplestGUI::getChar(const std::string& valid) {
     while (true) {
         char choice;
-        cin >> choice;
+        std::cin >> choice;
         choice = static_cast <char> (toupper(choice));
         if (std::find(valid.begin(), valid.end(), choice) == valid.end()) {
             wrongInput(false);
@@ -67,9 +56,17 @@ char SimplestGUI::getChar(const std::string& valid) {
 }
 
 void SimplestGUI::displayBoard(const Board& board, bool isMine) {
+
+    std::cout << " ";
+    for (int i = 0; i < board.width; ++i) {
+        std::cout << i + 1;
+    }
+    std::cout << "\n";
+
     for (int i = 0; i < board.height; ++i) {
+        std::cout << i + 1;
         for (const auto& cell: board.cells[i]) {
-            wchar_t toPrint;
+            char toPrint;
             switch (cell.getState()) {
                 case Cell::sea:toPrint = '~';
                     break;
@@ -82,18 +79,18 @@ void SimplestGUI::displayBoard(const Board& board, bool isMine) {
                 case Cell::deadShip:toPrint = 'X';
                     break;
             }
-            wcout << toPrint;
+            std::cout << toPrint;
         }
-        wcout << '\n';
+        std::cout << '\n';
     }
 }
 int SimplestGUI::displayOptions(const std::string& title, const std::vector<std::string>& options) {
     clearScreen();
-    cout << title << endl;
+    std::cout << title << std::endl;
     for (int i = 1; i <= options.size(); ++i) {
-        cout << i << ". " << options[i - 1] << std::endl;
+        std::cout << i << ". " << options[i - 1] << std::endl;
     }
-    cout << "Choose!\n";
+    std::cout << "Choose!\n";
     while (true) {
         int choice = getInt();
         if (1 <= choice and choice <= options.size())
@@ -102,29 +99,25 @@ int SimplestGUI::displayOptions(const std::string& title, const std::vector<std:
             wrongInput(false);
     }
 }
-Position SimplestGUI::getAttack(const Player& player, const Board& attackedBoard) {
+Position SimplestGUI::getAttack(const Player& player, Player& enemy) {
     clearScreen();
-    cout << "Enemy board" << endl;
-    //Todo replace attacked board with attacked player
-    displayBoard(attackedBoard, false);
+    cout << enemy.getName() <<  "'s board" << endl;
+    displayBoard(*enemy.board, false);
     cout << "Your board" << endl;
-    displayBoard(player.board, true);
+    displayBoard(*(player.board), true);
     cout << "Player " << player.getName() << " attack! (first row, then column)" << endl;
     while (true) {
         Position attackPosition = get0IndexedPosition();
-        if (attackedBoard.withinBorders(attackPosition)
-            and attackedBoard.cells[attackPosition.x][attackPosition.y].isOkToAttack())
+        if (enemy.board->withinBorders(attackPosition)
+            and enemy.board->cells[attackPosition.x][attackPosition.y].isOkToAttack())
             return attackPosition;
         else
             wrongInput(false);
     }
 }
-void SimplestGUI::displayPlayer(const Player& player, bool isMine) {
-//    displayBoard(player.board, isMine);
-}
 std::vector<Cell*> SimplestGUI::placeShip(Player& player, SimpleShip::Type type, int size) {
     clearScreen();
-    displayBoard(player.board, true);
+    displayBoard(*player.board, true);
     cout << "Player " << player.getName() << " place a ship" << endl;
     cout << "Type: " << Ship::typeToString[type] << endl;
     cout << "Size: " << size << endl;
@@ -133,27 +126,22 @@ std::vector<Cell*> SimplestGUI::placeShip(Player& player, SimpleShip::Type type,
         positions.clear();
         if (type == SimpleShip::Type::T ||
             type == SimpleShip::Type::cross) {
+            //Cross or T
             Position center;
-            do {
-                cout << "Write coordinates of the center of the ship (first row, then column)" << endl;
-                center = get0IndexedPosition();
-                if (player.board.withinBorders(center))
-                    break;
-                else
-                    wrongInput(false);
-            } while (true);
+            cout << "Write coordinates of the center of the ship (first row, then column)" << endl;
+            center = get0IndexedPosition();
 
             if (type == SimpleShip::Type::cross) {
                 //Cross
                 positions = ShipFactory::generateCrossShip(center, size);
             } else {
                 //T
-                cout << "Write the orientation of the ship (WASD)" << endl;
+                std::cout << "Write the orientation of the ship (WASD)" << std::endl;
                 auto direction = charToDirection(getChar("WASD"));
                 positions = ShipFactory::generateTShip(center, direction, size);
             }
         } else {
-            //Square
+            //Square or Line
             cout << "Write coordinates of upper-left corner of the ship (first row, then column)" << endl;
             Position upperLeft = get0IndexedPosition();
             if (type == SimpleShip::Type::square) {
@@ -162,7 +150,7 @@ std::vector<Cell*> SimplestGUI::placeShip(Player& player, SimpleShip::Type type,
                 //Line
                 Position direction(1, 0);
                 if (size != 1) {
-                    cout << "Write the orientation of the ship (SD)" << endl;
+                    std::cout << "Write the orientation of the ship (SD)" << std::endl;
                     direction = charToDirection(getChar("SD"));
                 }
                 positions = ShipFactory::generateLineShip(upperLeft, direction, size);
@@ -173,11 +161,11 @@ std::vector<Cell*> SimplestGUI::placeShip(Player& player, SimpleShip::Type type,
             std::cerr << el << endl;
         } //DEBUG
 
-        auto result = ShipFactory::convertPositioning(positions, player.board);
+        auto result = ShipFactory::convertPositioning(positions, *player.board);
         if (!result.empty()) {
             return result;
         } else {
-            cout << "Incorrect Positioning. Try again" << endl;
+            std::cout << "Incorrect Positioning. Try again" << std::endl;
         }
     }
 }
@@ -200,13 +188,13 @@ void SimplestGUI::clearScreen() {
 }
 std::string SimplestGUI::getNewLine() {
     std::string temp;
-    cin.ignore();
-    std::getline(cin, temp);
-    cin.putback('\n');
+    std::cin.ignore();
+    std::getline(std::cin, temp);
+    std::cin.putback('\n');
     return temp;
 }
 void SimplestGUI::systemPause() {
-    cout << "Press enter to continue" << endl;
+    std::cout << "Press enter to continue" << std::endl;
     getNewLine();
 }
 
@@ -214,14 +202,14 @@ void SimplestGUI::displaySettings(const std::string& title, std::vector<Setting*
     while (true) {
         clearScreen();
         if (!title.empty())
-            cout << title << endl;
+            std::cout << title << std::endl;
         for (int i = 1; i <= settings.size(); ++i) {
-            cout << std::to_string(i) << ". " << settings[i - 1]->getDescription() << ": "
-                 << settings[i - 1]->toString() << endl;
+            std::cout << std::to_string(i) << ". " << settings[i - 1]->getDescription() << ": "
+                 << settings[i - 1]->toString() << std::endl;
         }
-        cout
+        std::cout
             << "If you want to change any of these, first print the index of the option, then its new value (on one line, whitespace separated).\n"
-               "Once you are done, hit enter to exit" << endl;
+               "Once you are done, hit enter to exit" << std::endl;
         auto temp = getNewLine();
         if (temp.empty()) //We are done
             return;
@@ -247,4 +235,16 @@ void SimplestGUI::displaySettings(const std::string& title, std::vector<Setting*
             continue;
         }
     }
+}
+
+void SimplestGUI::showResults(const Player& winner, int roundsPlayed) {
+    std::cout <<"Results: \n";
+
+    std::cout << winner.getName() << " won after " + std::to_string(roundsPlayed) + " rounds\n";
+}
+
+void SimplestGUI::finishWork() {
+    std::cout << "Press enter to exit\n";
+
+    getNewLine();
 }
