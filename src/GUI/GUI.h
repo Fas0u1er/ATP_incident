@@ -15,19 +15,14 @@ class Player;
 
 
 class GUI {
-private:
-
 public:
     virtual int displayOptions(const std::string& title, const std::vector<std::string>& options) = 0;
-    virtual void displayBoard(const Board& board, bool isMine) = 0;
-    virtual Position getAttack(const Player& player, Player& enemy) = 0;
-    virtual void displayPlayer(const Player& player, bool isMine) = 0;
+    virtual Position getAttack(const Player& player, const Player& enemy) = 0;
     virtual std::vector<Cell*> placeShip(Player& player, SimpleShip::Type type, int size) = 0;
     //Returns correctly placed ship, represented by a vector of cells
-    virtual void clearScreen() = 0;
     virtual void displaySettings(const std::string& title, std::vector<Setting*>&) = 0;
+    // Given list of settings presents them to the user and allows to change them
     virtual void showResults(const Player& winner, int roundsPlayed) = 0;
     virtual void finishWork() = 0;
-    // Given list of settings presents them to the user and allows to change them
     virtual ~GUI() = default;
 };

@@ -54,13 +54,12 @@ void GameMaster::runBattle() {
 }
 
 void GameMaster::showResults() {
-    gui.clearScreen();
-
     for (auto playerPtr : players) {
         if (playerPtr->isAlive()) {
             gui.showResults(*playerPtr, roundsPlayed);
+            gui.finishWork();
+            return;
         }
     }
 
-    gui.finishWork();
 }

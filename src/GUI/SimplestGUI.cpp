@@ -11,11 +11,14 @@
 #include <cstdlib>
 #include <algorithm>
 
+using std::endl;
+using std::cin;
+using std::left;
+using std::setw;
+using std::setfill;
+using std::cout;
+using std::wcout;
 
-template<typename T>
-void SimplestGUI::printElement(T t, const int& width) {
-    std::cout << std::left << std::setw(width) << std::setfill(' ') << t;
-}
 void SimplestGUI::wrongInput(bool waitForEnter) {
     std::cout << "Incorrect input. Try again" << std::endl;
     if (waitForEnter) {
@@ -86,7 +89,7 @@ void SimplestGUI::displayBoard(const Board& board, bool isMine) {
         }
         std::cout << i + 1;
         for (const auto& cell: board.cells[i]) {
-            wchar_t toPrint;
+            char toPrint;
             switch (cell.getState()) {
                 case Cell::sea:toPrint = '~';
                     break;
@@ -99,9 +102,9 @@ void SimplestGUI::displayBoard(const Board& board, bool isMine) {
                 case Cell::deadShip:toPrint = 'X';
                     break;
             }
-            std::wcout << toPrint;
+            std::cout << toPrint;
         }
-        std::wcout << '\n';
+        std::cout << '\n';
     }
 }
 int SimplestGUI::displayOptions(const std::string& title, const std::vector<std::string>& options) {
@@ -119,9 +122,9 @@ int SimplestGUI::displayOptions(const std::string& title, const std::vector<std:
             wrongInput(false);
     }
 }
-Position SimplestGUI::getAttack(const Player& player, Player& enemy) {
+Position SimplestGUI::getAttack(const Player& player, const Player& enemy) {
     clearScreen();
-    std::cout << enemy.getName() <<  "'s board" << std::endl;
+    std::cout << enemy.getName() << "'s board" << std::endl;
     displayBoard(*enemy.board, false);
     std::cout << "Your board" << std::endl;
     displayBoard(*(player.board), true);
@@ -129,14 +132,11 @@ Position SimplestGUI::getAttack(const Player& player, Player& enemy) {
     while (true) {
         Position attackPosition = get0IndexedPosition();
         if (enemy.board->withinBorders(attackPosition)
-            and enemy.board->cells[attackPosition.x][attackPosition.y].isOkToAttack())
+            and enemy.board->getCellPtr(attackPosition)->isOkToAttack())
             return attackPosition;
         else
             wrongInput(false);
     }
-}
-void SimplestGUI::displayPlayer(const Player& player, bool isMine) {
-//    displayBoard(player.board, isMine);
 }
 std::vector<Cell*> SimplestGUI::placeShip(Player& player, SimpleShip::Type type, int size) {
     clearScreen();
@@ -179,10 +179,6 @@ std::vector<Cell*> SimplestGUI::placeShip(Player& player, SimpleShip::Type type,
                 positions = ShipFactory::generateLineShip(upperLeft, direction, size);
             }
         }
-
-//        for (auto el: positions) {
-//            std::cerr << el << std::endl;
-//        } //DEBUG
 
         auto result = ShipFactory::convertPositioning(positions, *player.board);
         if (!result.empty()) {
@@ -261,7 +257,8 @@ void SimplestGUI::displaySettings(const std::string& title, std::vector<Setting*
 }
 
 void SimplestGUI::showResults(const Player& winner, int roundsPlayed) {
-    std::cout <<"Results: \n";
+    clearScreen();
+    std::cout << "Results: \n";
 
     std::cout << winner.getName() << " won after " + std::to_string(roundsPlayed) + " rounds\n";
 }

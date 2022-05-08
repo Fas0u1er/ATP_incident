@@ -10,7 +10,7 @@ class SimpleShip;
 class Cell {
 public:
     enum State {
-        sea, deadSea, ship, attackedShip, deadShip
+        sea, deadSea, ship, attackedShip, deadShip, pendingShip, misplacedShip
     };
 
     Cell(Board* board, Position pos);
@@ -21,6 +21,8 @@ public:
 
     [[nodiscard]] State getState() const;
 
+    void setState(Cell::State newState);
+
     [[nodiscard]] bool isShip() const;
 
     [[nodiscard]] bool isFarFromShips() const;
@@ -29,7 +31,8 @@ public:
 
     void bindToShip(SimpleShip*);
 
-    std::vector <Position> getNeighbours() const;
+    std::vector<Position> getNeighbours() const;
+
 private:
     friend SimpleShip;
 

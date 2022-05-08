@@ -35,6 +35,10 @@ Cell::State Cell::getState() const {
     return state;
 }
 
+void Cell::setState(Cell::State newState) {
+    state = newState;
+}
+
 bool Cell::isShip() const {
     return
         state == Cell::State::attackedShip or
