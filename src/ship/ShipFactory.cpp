@@ -30,7 +30,7 @@ std::vector<Cell*> ShipFactory::convertPositioning(const std::vector<Position>& 
         if (!board.withinBorders(position))
             return {};
         auto cellPtr = board.getCellPtr(position);
-        if (!cellPtr->isFarFromShips()) {
+        if (!cellPtr->isOkToPlaceShip()) {
             return {};
         }
         cells.push_back(cellPtr);

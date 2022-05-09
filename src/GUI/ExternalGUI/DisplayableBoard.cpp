@@ -35,6 +35,10 @@ void DisplayableBoard::recolor(Board& board, bool isMine) {
                     color = sf::Color::Red;
                     break;
                 }
+                case Cell::island:{// Light green
+                    color = sf::Color(171, 219, 35);
+                    break;
+                }
                 default: throw std::logic_error("Unknown cell type in recolor");
             }
             grid[i][j].rectangle.setFillColor(color);

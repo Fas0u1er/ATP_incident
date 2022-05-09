@@ -101,6 +101,8 @@ void SimplestGUI::displayBoard(const Board& board, bool isMine) {
                     break;
                 case Cell::deadShip:toPrint = 'X';
                     break;
+                case Cell::island:toPrint = '@';
+                    break;
             }
             std::cout << toPrint;
         }

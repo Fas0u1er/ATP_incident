@@ -151,7 +151,7 @@ std::vector<Cell*> ExternalGUI::placeShip(Player& player, SimpleShip::Type type,
                 if (!player.board->withinBorders(position) || cell->isShip())
                     continue;
                 previousStates.push_back(cell->getState());
-                if (!cell->isFarFromShips()) {
+                if (!cell->isOkToPlaceShip()) {
                     cell->setState(Cell::State::misplacedShip);
                 } else {
                     cell->setState(Cell::State::pendingShip);

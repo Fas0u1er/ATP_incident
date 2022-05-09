@@ -10,7 +10,7 @@ class SimpleShip;
 class Cell {
 public:
     enum State {
-        sea, deadSea, ship, attackedShip, deadShip, pendingShip, misplacedShip
+        sea, deadSea, ship, attackedShip, deadShip, pendingShip, misplacedShip, island
     };
 
     Cell(Board* board, Position pos);
@@ -26,6 +26,8 @@ public:
     [[nodiscard]] bool isShip() const;
 
     [[nodiscard]] bool isFarFromShips() const;
+
+    bool isOkToPlaceShip() const;
 
     [[nodiscard]] bool isOkToAttack() const;
 

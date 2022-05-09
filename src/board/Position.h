@@ -18,6 +18,8 @@ struct Position {
     Position operator-(const Position& other) const;
     Position& operator*=(int k);
     Position operator*(int k) const;
+    Position operator/(int k) const;
+    Position& operator/=(int k);
     bool operator!=(const Position& other) const;
     bool operator==(const Position& other) const;
     friend std::ostream& operator<<(std::ostream& os, const Position& position);

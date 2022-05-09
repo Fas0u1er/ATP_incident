@@ -10,6 +10,7 @@ bool Cell::attack() {
     switch (state) {
         case deadSea:
         case deadShip:
+        case island:
         case attackedShip: throw std::logic_error("Attacking dead cells should be prohibited");
         case ship: {
             state = attackedShip;
@@ -55,10 +56,15 @@ bool Cell::isFarFromShips() const {
     return true;
 }
 
+bool Cell::isOkToPlaceShip() const {
+    return isFarFromShips() && state != island;
+}
+
 void Cell::bindToShip(SimpleShip* ship) {
     shipPtr = ship;
     state = Cell::State::ship;
 }
+
 bool Cell::isOkToAttack() const {
     return
         state == Cell::State::ship or
