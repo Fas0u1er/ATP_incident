@@ -36,6 +36,7 @@ public:
 
     void move(sf::Vector2f offset);
 
+    void defaultClickable();
 
     sf::Text text;
 };

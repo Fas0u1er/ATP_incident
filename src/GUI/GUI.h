@@ -24,5 +24,6 @@ public:
     // Given list of settings presents them to the user and allows to change them
     virtual void showResults(const Player& winner, int roundsPlayed) = 0;
     virtual void finishWork() = 0;
+    virtual void waitForNextPlayer(const Player& player) = 0;
     virtual ~GUI() = default;
 };

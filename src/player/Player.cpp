@@ -15,7 +15,7 @@ std::string Player::getName() const {
 
 Player::Player(int idx) : index(idx),
                           board(BoardBuilder::getInstance().constructEmptyRectangleBoard()) {
-    if (GlobalSettings::getInstance().haveIsland) {
+    if (GlobalSettings::getInstance().islandSize > 0) {
         BoardBuilder::getInstance().addIsland(board.get(),
                                               GlobalSettings::getInstance().islandSize);
     }

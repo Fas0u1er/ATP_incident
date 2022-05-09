@@ -13,15 +13,16 @@ int ExternalGUI::displayOptions(const std::string& title, const std::vector<std:
     std::vector<TextButton> displayableOptions;
     {
         auto globalBounds = titleEntity.getGlobalBounds();
-        sf::Vector2f position(0, globalBounds.top + globalBounds.height + 20);
+        sf::Vector2f position(10, globalBounds.top + globalBounds.height + 20);
         sf::Vector2f vShift(0, 10);
         for (int i = 0; i < options.size(); ++i) {
             displayableOptions.emplace_back(
                 TextButton::createText(options[i])
             );
+            displayableOptions[i].defaultClickable();
             displayableOptions[i].setPosition(position);
             auto rectangle = displayableOptions[i].rectangle.getGlobalBounds();
-            position = sf::Vector2f{0, rectangle.top + rectangle.height} + vShift;
+            position = sf::Vector2f{10, rectangle.top + rectangle.height} + vShift;
         }
     }
 
@@ -66,13 +67,13 @@ Position ExternalGUI::getAttack(const Player& player, const Player& enemy) {
     auto yourBoardText = TextButton::createText("Your board");
     sf::FloatRect textRect = yourBoardText.getLocalBounds();
     yourBoardText.setOrigin(textRect.left + textRect.width / 2.f,
-                     textRect.top);
+                            textRect.top);
 
     yourBoardText.setPosition((myBoard.left() + myBoard.right()) / 2, myBoard.bottom() + 30);
     auto enemyBoardText = TextButton::createText(enemy.getName() + "'s board");
     textRect = enemyBoardText.getLocalBounds();
     enemyBoardText.setOrigin(textRect.left + textRect.width / 2.f,
-                            textRect.top);
+                             textRect.top);
 
     enemyBoardText.setPosition((enemyBoard.left() + enemyBoard.right()) / 2, enemyBoard.bottom() + 30);
     //Discard useless events
@@ -175,11 +176,33 @@ std::vector<Cell*> ExternalGUI::placeShip(Player& player, SimpleShip::Type type,
     }
 }
 void ExternalGUI::showResults(const Player& winner, int roundsPlayed) {
+    // Create entities
+    auto titleEntity = createTitle("Results\nPress enter to exit");
+    auto text = createTitle(winner.getName() + " won after " + std::to_string(roundsPlayed) + " rounds");
+    text.setPosition(text.getPosition().x, 500);
+    //Discard useless events
+    processEvents();
+    while (true) {
+        //Process events from previous iteration
+        sf::Event event{};
+        while (window.pollEvent(event)) {
+            if (basicProcessing(event))
+                continue;
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Enter) {
+                    return;
+                }
+            }
+        }
 
+        window.clear(sf::Color::White);
+        //Render
+        window.draw(titleEntity);
+        window.draw(text);
+        window.display();
+    }
 }
-void ExternalGUI::finishWork() {
-
-}
+void ExternalGUI::finishWork() { /* Does nothing */ }
 void ExternalGUI::displaySettings(const std::string& title, std::vector<Setting*>& settings) {
     // Create entities
     auto titleEntity = createTitle(title);
@@ -188,7 +211,7 @@ void ExternalGUI::displaySettings(const std::string& title, std::vector<Setting*
     auto exitEntity = TextButton(TextButton::createText("Exit"));
     {
         auto globalBounds = titleEntity.getGlobalBounds();
-        sf::Vector2f position(0, globalBounds.top + globalBounds.height + 20);
+        sf::Vector2f position(10, globalBounds.top + globalBounds.height + 20);
         sf::Vector2f vShift(0, 10);
         float maxWidth = 0;
         for (int i = 0; i < settings.size(); ++i) {
@@ -197,7 +220,7 @@ void ExternalGUI::displaySettings(const std::string& title, std::vector<Setting*
             );
             descriptions[i].setPosition(position);
             auto rectangle = descriptions[i].rectangle.getGlobalBounds();
-            position = sf::Vector2f{0, rectangle.top + rectangle.height} + vShift;
+            position = sf::Vector2f{10, rectangle.top + rectangle.height} + vShift;
             maxWidth = std::max(maxWidth, rectangle.width + rectangle.left);
         }
         position.x = std::max(maxWidth + 20, 100.f);
@@ -209,6 +232,7 @@ void ExternalGUI::displaySettings(const std::string& title, std::vector<Setting*
         }
         globalBounds = descriptions.back().rectangle.getGlobalBounds();
         exitEntity.setPosition({globalBounds.left, globalBounds.top + globalBounds.height + 30});
+        exitEntity.defaultClickable();
     }
 
     //Discard useless events
@@ -231,6 +255,7 @@ void ExternalGUI::displaySettings(const std::string& title, std::vector<Setting*
                     }
                 }
             }
+
             if (exitEntity.processEvent(event))
                 return;
         }
@@ -247,6 +272,8 @@ void ExternalGUI::displaySettings(const std::string& title, std::vector<Setting*
             input.draw(window);
         }
 
+        sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+        exitEntity.doHover(sf::Vector2f(mousePosition.x, mousePosition.y));
         exitEntity.draw(window);
 
         window.display();
@@ -293,4 +320,29 @@ bool ExternalGUI::basicProcessing(sf::Event& event) {
 ExternalGUI::ExternalGUI() : window(sf::VideoMode(windowWidth, windowHeight), "Battleships!") {
     TextButton::defaultFont.loadFromFile("../resources/fonts/JetBrainsMonoNL-Medium.ttf");
     window.setFramerateLimit(120);
+}
+void ExternalGUI::waitForNextPlayer(const Player& player) {
+    // Create entities
+    auto titleEntity = createTitle(player.getName() + "'s turn.\nPress enter to continue");
+    //Discard useless events
+    processEvents();
+    while (true) {
+        //Process events from previous iteration
+        sf::Event event{};
+        while (window.pollEvent(event)) {
+            if (basicProcessing(event))
+                continue;
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Enter) {
+                    return;
+                }
+            }
+        }
+
+        window.clear(sf::Color::White);
+
+        //Render
+        window.draw(titleEntity);
+        window.display();
+    }
 }

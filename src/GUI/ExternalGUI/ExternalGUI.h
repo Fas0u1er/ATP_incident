@@ -22,9 +22,6 @@ private:
 
     sf::Text createTitle(const std::string& text);
 
-    void displayBoard(const Board& board, sf::Vector2f shift, bool isMine);
-
-
 public:
 
     int displayOptions(const std::string& title, const std::vector<std::string>& options) override;
@@ -36,12 +33,14 @@ public:
     void showResults(const Player& winner, int roundsPlayed) override;
     void finishWork() override;
 
+    void waitForNextPlayer(const Player &player) override;
+
     ExternalGUI();
 
 private:
 
     static const int windowHeight = 1000;
-    static const int windowWidth = 1000;
+    static const int windowWidth = 1600;
 
     sf::RenderWindow window;
 };

@@ -44,4 +44,6 @@ public:
     void displaySettings(const std::string& title, std::vector<Setting*>&) override;
     void showResults(const Player& winner, int roundsPlayed) override;
     void finishWork() override;
+
+    void waitForNextPlayer(const Player &player) override;
 };

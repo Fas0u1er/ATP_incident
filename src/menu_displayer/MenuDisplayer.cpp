@@ -132,6 +132,9 @@ void MenuDisplayer::boardSettings() {
     settings.emplace_back(
         new ConcreteSetting<int>("Width", globalSettings.boardWidth)
     );
+    settings.emplace_back(
+        new ConcreteSetting<int>("Island size", globalSettings.islandSize)
+    );
     gui.displaySettings("Board settings:", settings);
 }
 

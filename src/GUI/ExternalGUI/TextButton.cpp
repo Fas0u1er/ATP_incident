@@ -21,13 +21,13 @@ void TextButton::setPosition(sf::Vector2f position) {
     text.move(position.x - globalBounds.left + shift.x / 2, position.y - globalBounds.top + shift.y / 2.f);
 }
 
-
 TextButton::TextButton(const sf::Text& text,
                        ButtonBase::functionType onClick,
                        ButtonBase::functionType onHover,
-                       ButtonBase::functionType setDefault) : ButtonBase(std::move(onClick), std::move(onHover), std::move(setDefault)), text(text) {
+                       ButtonBase::functionType setDefault) : ButtonBase(std::move(onClick),
+                                                                         std::move(onHover),
+                                                                         std::move(setDefault)), text(text) {
     setText(text);
-    rectangle.setFillColor(sf::Color::Yellow);
     setPosition({0, 0});
 }
 
@@ -43,4 +43,15 @@ void TextButton::setSize(sf::Vector2f newSize) {
 void TextButton::move(sf::Vector2f offset) {
     rectangle.move(offset);
     text.move(offset);
+}
+void TextButton::defaultClickable() {
+    rectangle.setFillColor(sf::Color(5, 200, 201, 50));
+    this->onHover = [](ButtonBase& this_) {
+      this_.rectangle.setOutlineThickness(2);
+      this_.rectangle.setOutlineColor(sf::Color(100, 151, 13));
+    };
+    this->setDefault = [](ButtonBase& this_) {
+      this_.rectangle.setOutlineThickness(2);
+      this_.rectangle.setOutlineColor(sf::Color::Transparent);
+    };
 }

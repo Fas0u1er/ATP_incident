@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(ATP_incident)
 set(CMAKE_CXX_STANDARD 20)
 
-option(USE_GUI "If set builds with SFML GUI. Console application otherwise." ON)
+option(USE_GUI "If set builds with SFML GUI. Console application otherwise." OFF)
 if (USE_GUI)
     add_definitions(-DUSE_GUI)
 endif ()

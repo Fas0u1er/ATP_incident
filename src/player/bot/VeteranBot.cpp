@@ -45,10 +45,10 @@ std::vector<Position> VeteranBot::chooseBestAttacks(Board& board) {
                         break;
                     }
                     case (Cell::attackedShip): {
-                        attackPriority += 8;
+                        attackPriority += 16;
                         break;
                     }
-
+                    case (Cell::deadSea):
                     case (Cell::island): {
                         attackPriority -= 1;
                         break;

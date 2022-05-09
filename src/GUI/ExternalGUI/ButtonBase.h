@@ -7,7 +7,7 @@ class ButtonBase {
 public:
     using functionType = std::function<void(ButtonBase&)>;
     bool processEvent(sf::Event& event);
-private:
+protected:
     functionType onClick;
     functionType onHover;
     functionType setDefault;

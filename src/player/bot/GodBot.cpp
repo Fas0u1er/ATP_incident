@@ -63,7 +63,7 @@ std::vector<Cell*> GodBot::getNewShipCells(SimpleShip::Type type, int size) {
 }
 
 bool GodBot::attack(Player* enemy) {
-    int godBlessing = getRandint(10);
+    int godBlessing = getRandint(7);
 
     std::vector<Position> best;
     if (godBlessing == 0) {

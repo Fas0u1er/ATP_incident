@@ -6,6 +6,7 @@ GlobalSettings::GlobalSettings() {
         amount += sizes.size();
     }
     assert(amount == shipsNumber);
+    assert(playerNumber == playerSettings.size());
     resize(playerNumber);
 }
 void GlobalSettings::resize(int newPlayerNumber) {

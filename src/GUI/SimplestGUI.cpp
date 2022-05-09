@@ -62,9 +62,9 @@ char SimplestGUI::getChar(const std::string& valid) {
     }
 }
 
-int countDigits (int x) {
+int countDigits(int x) {
     int counter = 0;
-    while(x) {
+    while (x) {
         x /= 10;
         ++counter;
     }
@@ -226,7 +226,7 @@ void SimplestGUI::displaySettings(const std::string& title, std::vector<Setting*
             std::cout << title << std::endl;
         for (int i = 1; i <= settings.size(); ++i) {
             std::cout << std::to_string(i) << ". " << settings[i - 1]->getDescription() << ": "
-                 << settings[i - 1]->toString() << std::endl;
+                      << settings[i - 1]->toString() << std::endl;
         }
         std::cout
             << "If you want to change any of these, first print the index of the option, then its new value (on one line, whitespace separated).\n"
@@ -269,4 +269,8 @@ void SimplestGUI::finishWork() {
     std::cout << "Press enter to exit\n";
 
     getNewLine();
+}
+void SimplestGUI::waitForNextPlayer(const Player& player) {
+    std::cout << player.getName() + "'s turn";
+    systemPause();
 }

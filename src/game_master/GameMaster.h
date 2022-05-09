@@ -19,4 +19,5 @@ private:
     void runBattle();
     void initializePlayers();
     void showResults();
+    int nextAlivePlayer(int current);
 };
