@@ -1,6 +1,6 @@
 #include "src/game_master/GameMaster.h"
 
-#if USE_GUI
+#ifdef USE_GUI
 #include "src/GUI/ExternalGUI/ExternalGUI.h"
 using GUI_TYPE = ExternalGUI;
 #else
