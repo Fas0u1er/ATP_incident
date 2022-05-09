@@ -12,17 +12,17 @@ public:
     int boardWidth = 15;
     int boardHeight = 10;
     bool haveIsland = true;
-    int islandSize = 13;
+    int islandSize = 16;
 
-    int shipsNumber = 5;
+    int shipsNumber = 6;
     std::unordered_map<Ship::Type, std::vector <int>> ships = {
-            {Ship::Type::line, {1, 2, 4}},
+            {Ship::Type::line, {1, 2, 2, 4}},
             {Ship::Type::square, {2}},
             {Ship::Type::T, {1}}
     };
     int playerNumber = 2;
-    std::vector<PlayerSettings> playerSettings{{"Human", PlayerSettings::Type::Human},
-                                               {"God Bot", PlayerSettings::Type::GodBot}};
+    std::vector<PlayerSettings> playerSettings{{"H2", PlayerSettings::Type::Human},
+                                               {"Bot", PlayerSettings::Type::GodBot}};
 
     static GlobalSettings& getInstance();
 

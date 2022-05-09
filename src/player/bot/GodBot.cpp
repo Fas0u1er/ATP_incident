@@ -1,23 +1,73 @@
 #include "GodBot.h"
-std::vector<Cell*> GodBot::getNewShipCells(SimpleShip::Type type, int size) {
-    while (true) {
-        Position upperLeft = getRandomCell();
 
-        const std::vector<Position> directions = {Position(1, 0), Position(0, 1),
-                                                  Position(0, -1), Position(-1, 0)};
-        Position dir = directions[getRandint(directions.size())];
-        auto shipCells = ShipFactory::convertPositioning(
-            ShipFactory::generateShipPositions(type, upperLeft, size, dir), *board);
-        if (!shipCells.empty())
-            return shipCells;
+int GodBot::assessShipsPositioning(std::vector<Cell*>& newShipCells) {
+    int height = GlobalSettings::getInstance().boardHeight;
+    int width = GlobalSettings::getInstance().boardWidth;
+
+    int freeSea = 0;
+
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+
+            bool isFarFromNewShip = true;
+            for(auto neigh: board->getCellPtr({i, j})->getNeighbours()) {
+                for (auto shipsCell: newShipCells) {
+                    if(board->getCellPtr(neigh) == shipsCell)
+                        isFarFromNewShip = false;
+                }
+            }
+
+            if (board->getCellPtr({i, j})->isOkToPlaceShip() && isFarFromNewShip)
+                freeSea++;
+        }
     }
+
+    return freeSea;
 }
+
+std::vector<Cell*> GodBot::getNewShipCells(SimpleShip::Type type, int size) {
+
+    std::vector<Cell*> shipCells;
+    int bestRating = 0;
+
+    for (int i = 0; i < 10; ++i) {
+
+
+        std::vector<Cell*> newShipCells;
+        while (true) {
+            Position upperLeft = getRandomCell();
+
+            const std::vector<Position> directions = {Position(1, 0), Position(0, 1),
+                                                      Position(0, -1), Position(-1, 0)};
+            Position dir = directions[getRandint(directions.size())];
+            newShipCells = ShipFactory::convertPositioning(
+                    ShipFactory::generateShipPositions(type, upperLeft, size, dir), *board);
+            if (!newShipCells.empty())
+                break;
+        }
+
+        if(i != 0 && getRandint(4) == 0) {
+            //some ships are placed randomly
+            break;
+        }
+
+        int rating = assessShipsPositioning(newShipCells);
+
+        if(rating > bestRating) {
+            shipCells = newShipCells;
+            bestRating = rating;
+        }
+    }
+
+    return shipCells;
+}
+
 bool GodBot::attack(Player* enemy) {
-    int godBlessing = getRandint(3);
+    int godBlessing = getRandint(10);
 
     std::vector<Position> best;
     if (godBlessing == 0) {
-        best = chooseShipCells(*(enemy->board));
+        best = chooseEnemyShipCells(*(enemy->board));
     } else {
         best = VeteranBot::chooseBestAttacks(*(enemy->board));
     }
@@ -27,7 +77,7 @@ bool GodBot::attack(Player* enemy) {
 
 GodBot::GodBot(int index) : Bot(index) {}
 
-std::vector<Position> GodBot::chooseShipCells(Board& board) {
+std::vector<Position> GodBot::chooseEnemyShipCells(Board& enemyBoard) {
     std::vector<Position> shipCells;
 
     int height = GlobalSettings::getInstance().boardHeight;
@@ -35,7 +85,7 @@ std::vector<Position> GodBot::chooseShipCells(Board& board) {
 
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            if (board.getCellPtr({i, j})->isShip() && board.getCellPtr({i, j})->isOkToAttack()) {
+            if (enemyBoard.getCellPtr({i, j})->isShip() && enemyBoard.getCellPtr({i, j})->isOkToAttack()) {
                 shipCells.emplace_back(i, j);
             }
         }

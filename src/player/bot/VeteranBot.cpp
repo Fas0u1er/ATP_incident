@@ -8,8 +8,8 @@ std::vector<Cell*> VeteranBot::getNewShipCells(SimpleShip::Type type, int size) 
                                                   Position(0, -1), Position(-1, 0)};
         Position dir = directions[getRandint(directions.size())];
         auto shipCells = ShipFactory::convertPositioning(
-            ShipFactory::generateShipPositions(type, upperLeft, size, dir),
-            *board);
+                ShipFactory::generateShipPositions(type, upperLeft, size, dir),
+                *board);
         if (!shipCells.empty())
             return shipCells;
     }
@@ -36,18 +36,26 @@ std::vector<Position> VeteranBot::chooseBestAttacks(Board& board) {
                 continue;
             }
 
-            int attackPriority = 0 - static_cast<int>(i == 0) - static_cast<int>(j == 0);
-            for (auto neighbour: board.getCellPtr(Position(i, j))->getNeighbours()) {
+            int attackPriority = 0 - static_cast<int>(i == 0 || i == height)
+                                 - static_cast<int>(j == 0 || j == width);
+            for (auto neighbour : board.getCellPtr(Position(i, j))->getNeighbours()) {
                 switch (board.getCellPtr(neighbour)->getState()) {
                     case (Cell::deadShip): {
                         attackPriority -= INF;
                         break;
                     }
                     case (Cell::attackedShip): {
-                        attackPriority += 4;
+                        attackPriority += 8;
                         break;
                     }
-                    default: break;
+
+                    case (Cell::island): {
+                        attackPriority -= 1;
+                        break;
+                    }
+
+                    default:
+                        break;
                 }
             }
 
@@ -62,7 +70,6 @@ std::vector<Position> VeteranBot::chooseBestAttacks(Board& board) {
         }
     }
 
-    return
-        bestPossibleAttacks;
+    return bestPossibleAttacks;
 }
 
