@@ -1,47 +1,41 @@
-#include "Ship.h"
+#include <stdexcept>
 
-int Ship::getSize() {
+#include "Ship.h"
+#include "src/board/Cell.h"
+
+
+int Ship::getSize() const {
     return cells.size();
 }
 
-int Ship::getHP() {
+int Ship::getHP() const {
     int cnt = 0;
-    for (auto cellPtr : cells) {
+    for (auto cellPtr: cells) {
         if (cellPtr->getState() == Cell::State::ship)
             ++cnt;
     }
     return cnt;
 }
 
-bool Ship::isAlive() {
+bool Ship::isAlive() const {
     return getHP() != 0;
 }
 
-Ship::Type Ship::getType() {
+Ship::Type Ship::getType() const {
     return type;
 }
 
-Ship::State Ship::getState() {
+Ship::State Ship::getState() const {
     return state;
 }
 
-void Ship::updateState() {
-    if (getSize() == getHP()) {
-        state = untouched;
-        return;
-    }
-
-    if (getHP() == 0) {
-        state = dead;
-        for(auto* cellPtr:cells) {
-            cellPtr->state = Cell::State::deadShip;
-        }
-        return;
-    }
-
-    state = attacked;
-}
-
-std::vector<Cell*> Ship::getCells() {
+std::vector<Cell*>& Ship::getCells() {
     return cells;
 }
+
+const std::vector <std::string> Ship::typeToString = {
+    "line",
+    "cross",
+    "T",
+    "square",
+};

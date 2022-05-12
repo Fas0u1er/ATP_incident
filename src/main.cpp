@@ -1,10 +1,9 @@
-#include "src/event_loop/GameMaster.h"
-#include "ConsoleLibrary/ConsoleDisplayer.h"
+#include "src/game_master/GameMaster.h"
 #include "src/GUI/SimplestGUI.h"
 
 int main() {
     SimplestGUI gui;
     GameMaster game(gui);
-    game.run();
+    game.openMenu();
     return 0;
 }

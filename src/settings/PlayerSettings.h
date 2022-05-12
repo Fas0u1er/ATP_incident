@@ -2,10 +2,10 @@
 #include <string>
 
 struct PlayerSettings {
-    enum Type{
-        human, bot
+    enum Type {
+        Human, RookieBot, VeteranBot, GodBot
     };
     std::string name;
-    Type type;
+    Type type = Type::Human;
 };
 

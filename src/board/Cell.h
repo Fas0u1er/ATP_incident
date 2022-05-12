@@ -1,8 +1,11 @@
 #pragma once
 
-#include "src/board/Board.h"
-#include "src/board/Position.h"
-#include "src/ship/Ship.h"
+#include <vector>
+
+#include "Position.h"
+
+class Board;
+class SimpleShip;
 
 class Cell {
 public:
@@ -10,24 +13,28 @@ public:
         sea, deadSea, ship, attackedShip, deadShip
     };
 
-    Cell(Board* brd, Position pos);
+    Cell(Board* board, Position pos);
 
-    void attack();
+    bool attack();
 
     Position getPosition();
 
-    State getState();
+    [[nodiscard]] State getState() const;
 
-    bool isShip();
+    [[nodiscard]] bool isShip() const;
 
-    bool isFarFromShips();
+    [[nodiscard]] bool isFarFromShips() const;
 
-    void bindToShip(Ship&);
+    [[nodiscard]] bool isOkToAttack() const;
+
+    void bindToShip(SimpleShip*);
+
+    std::vector <Position> getNeighbours() const;
 private:
-    friend Ship;
+    friend SimpleShip;
 
     Board* boardPtr;
-    Ship* shipPtr;
+    SimpleShip* shipPtr;
     Position pos;
     State state;
 };

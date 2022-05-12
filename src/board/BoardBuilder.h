@@ -1,17 +1,20 @@
 #pragma once
-#include "Board.h"
-#include "Cell.h"
-#include "src/player/Player.h"
-#include "src/settings/GlobalSettings.h"
+
 #include <vector>
+#include <memory>
+
+
+class Player;
+class RectangleBoard;
+class Board;
 
 class BoardBuilder {
 public:
     static BoardBuilder& getInstance();
 
-    Board constructEmptyBoard();
+    std::unique_ptr <Board> constructEmptyRectangleBoard();
 
-    static void fillShips(Player*, Board*);
+    void fillShips(Player*, Board*);
 
 private:
     BoardBuilder() = default;

@@ -1,8 +1,10 @@
 #pragma once
+
+#include <string>
 #include <vector>
 
-#include "src/board/Cell.h"
-#include "src/ship/ShipFactory.h"
+class ShipFactory;
+class Cell;
 
 class Ship {
 public:
@@ -11,24 +13,41 @@ public:
     };
 
     enum Type {
-        line, cross, T, square
+        line,
+        cross,
+        /* Size = one way length of ray
+           For example:
+            #
+           ###
+            #
+            Has size 1*/
+        T,
+        /* Size = (common length of both vertical and horizontal parts - 1) / 2
+           For example:
+            ###
+             #
+             #
+            Has size 1*/
+        square
     };
+    static const std::vector <std::string> typeToString;
+    virtual void updateState() = 0;
 
-    int getSize();
+    [[nodiscard]] State getState() const;
 
-    int getHP();
+protected:
 
-    bool isAlive();
+    [[nodiscard]] int getSize() const;
 
-    Type getType();
+    [[nodiscard]] int getHP() const;
 
-    State getState();
+    [[nodiscard]] bool isAlive() const;
 
-    void updateState();
+    [[nodiscard]] Type getType() const;
 
-    std::vector<Cell*> getCells();
 
-private:
+    std::vector<Cell*>& getCells();
+
     friend ShipFactory;
     std::vector<Cell*> cells;
     State state;

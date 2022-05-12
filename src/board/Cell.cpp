@@ -1,26 +1,29 @@
+#include <stdexcept>
 #include "Cell.h"
-#include <cassert>
+#include "src/ship/SimpleShip.h"
+#include "RectangleBoard.h"
 
-Cell::Cell(Board* brd, Position pos) :
-        boardPtr(brd), shipPtr(nullptr), pos(pos), state(sea) {}
+Cell::Cell(Board* board, Position pos) :
+    boardPtr(board), shipPtr(nullptr), pos(pos), state(sea) {}
 
-
-void Cell::attack() {
+bool Cell::attack() {
     switch (state) {
         case deadSea:
-            return;
         case deadShip:
-            return;
-        case attackedShip:
-            return;
-        case ship:
+        case attackedShip: throw std::logic_error("Attacking dead cells should be prohibited");
+        case ship: {
             state = attackedShip;
-            assert(shipPtr != nullptr);
+            if (!shipPtr) {
+                throw std::logic_error("Tried attacking nullptr ship");
+            }
             shipPtr->updateState();
-            break;
-        case sea:
+            return true;
+        }
+        case sea: {
             state = deadSea;
-            break;
+            return false;
+        }
+        default: throw std::logic_error("Tried to attack unknown type of cell");
     }
 }
 
@@ -28,29 +31,47 @@ Position Cell::getPosition() {
     return pos;
 }
 
-Cell::State Cell::getState() {
+Cell::State Cell::getState() const {
     return state;
 }
 
-bool Cell::isShip() {
-    return state == Cell::State::attackedShip or
+bool Cell::isShip() const {
+    return
+        state == Cell::State::attackedShip or
             state == Cell::State::ship or
             state == Cell::State::deadShip;
 }
 
-bool Cell::isFarFromShips() {
-    for(int xShift: {-1, 0, 1}) {
-        for(int yShift: {-1, 0, 1}) {
-            Position neigh = pos + Position({xShift, yShift});
-            if(boardPtr->withinBorders(neigh) && boardPtr->getCellPtr(neigh)->isShip()) {
-                return false;
-            }
+bool Cell::isFarFromShips() const {
+    for (auto neigh: getNeighbours()) {
+        if (boardPtr->getCellPtr(neigh)->isShip()) {
+            return false;
         }
     }
     return true;
 }
 
-void Cell::bindToShip(Ship& ship) {
-    shipPtr = &(ship);
+void Cell::bindToShip(SimpleShip* ship) {
+    shipPtr = ship;
     state = Cell::State::ship;
 }
+bool Cell::isOkToAttack() const {
+    return
+        state == Cell::State::ship or
+            state == Cell::State::sea;
+}
+
+
+std::vector<Position> Cell::getNeighbours() const {
+    std::vector<Position> result;
+    for (int xShift: {-1, 0, 1}) {
+        for (int yShift: {-1, 0, 1}) {
+            Position neigh = pos + Position{xShift, yShift};
+            if (boardPtr->withinBorders(neigh)) {
+                result.push_back(neigh);
+            }
+        }
+    }
+    return result;
+}
+
