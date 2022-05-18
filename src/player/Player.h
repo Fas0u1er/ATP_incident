@@ -12,15 +12,13 @@ class Position;
 class Player {
 public:
     int index;
-    std::unique_ptr <Board> (board);
+    std::unique_ptr <Board> board;
 
-    explicit Player(int idx) : index(idx),
-                               board(BoardBuilder::getInstance().constructEmptyRectangleBoard()) {}
+    explicit Player(int idx);
 
     void fillBoard();
 
     virtual std::vector<Cell*> getNewShipCells(SimpleShip::Type, int size) = 0;
-
 
     virtual bool attack(Player* enemy) = 0;
 

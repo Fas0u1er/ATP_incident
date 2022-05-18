@@ -5,6 +5,8 @@
 #include "src/player/PlayerFactory.h"
 #include "src/menu_displayer/MenuDisplayer.h"
 #include "src/GUI/GUI.h"
+#include "src/player/bot/Bot.h"
+#include "src/player/HumanPlayer.h"
 
 GameMaster::GameMaster(GUI& gui) : gui(gui), players(GlobalSettings::getInstance().playerNumber), roundsPlayed(0) {}
 
@@ -25,27 +27,35 @@ void GameMaster::openMenu() {
 
 void GameMaster::runBattle() {
     while (true) {
-        int isAliveCnt = 0;
-        for (auto player : players) {
+        int aliveCount = 0;
+        for (auto player: players) {
             if (player->isAlive())
-                ++isAliveCnt;
+                ++aliveCount;
         }
-        if (isAliveCnt <= 1)
+        if (aliveCount <= 1)
             break;
 
         for (int attacker = 0; attacker < players.size(); ++attacker) {
             if (!players[attacker]->isAlive())
                 continue;
+
+            int humanCount = 0;
+            for (auto& player: players) {
+                if (dynamic_cast <HumanPlayer*> (player)) {
+                    ++humanCount;
+                }
+            }
+
+            if (dynamic_cast <HumanPlayer*> (players[attacker]) && humanCount > 1) {
+                gui.waitForNextPlayer(*players[attacker]);
+            }
+
             bool canAttackAgain = true;
             while (canAttackAgain) {
-                canAttackAgain = false;
-                for (int toAttack = (attacker + 1) % players.size(); toAttack != attacker;
-                     toAttack = (toAttack + 1) % players.size()) {
-                    if (!players[toAttack]->isAlive()) continue;
-
-                    canAttackAgain = players[attacker]->attack(players[toAttack]);
-                    break;
-                }
+                int toAttack = nextAlivePlayer(attacker);
+                if (toAttack == -1)
+                    return;
+                canAttackAgain = players[attacker]->attack(players[toAttack]);
             }
         }
 
@@ -54,13 +64,19 @@ void GameMaster::runBattle() {
 }
 
 void GameMaster::showResults() {
-    gui.clearScreen();
-
-    for (auto playerPtr : players) {
+    for (auto playerPtr: players) {
         if (playerPtr->isAlive()) {
             gui.showResults(*playerPtr, roundsPlayed);
+            gui.finishWork();
+            return;
         }
     }
 
-    gui.finishWork();
+}
+int GameMaster::nextAlivePlayer(int current) {
+    for (int alive = (current + 1) % players.size(); alive != current; alive = (alive + 1) % players.size()) {
+        if (players[alive]->isAlive())
+            return alive;
+    }
+    return -1;
 }

@@ -14,6 +14,8 @@ public:
 
     std::unique_ptr <Board> constructEmptyRectangleBoard();
 
+    void addIsland(Board*, int islandSize);
+
     void fillShips(Player*, Board*);
 
 private:

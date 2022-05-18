@@ -1,37 +1,26 @@
 #pragma once
+
 #include "vector"
 #include "iostream"
 #include "string"
 #include "cassert"
 #include "iomanip"
+#include "SFML/Graphics.hpp"
 
-#include "GUI.h"
-#include "src/board/Board.h"
+#include "src/GUI/GUI.h"
+#include "DisplayableBoard.h"
 
 class Position;
 class Player;
 
-class SimplestGUI : public GUI {
+class ExternalGUI : public GUI {
 private:
 
-    static void wrongInput(bool waitForEnter);
+    void processEvents();
 
-    static int getInt();
+    bool basicProcessing(sf::Event& event);
 
-    static Position get1IndexedPosition();
-
-    static Position get0IndexedPosition();
-
-    static char getChar(const std::string& valid);
-
-    static Position charToDirection(char c);
-
-    static std::string getNewLine();
-
-    static void systemPause();
-
-    void displayBoard(const Board& board, bool isMine);
-    void clearScreen();
+    sf::Text createTitle(const std::string& text);
 
 public:
 
@@ -40,10 +29,18 @@ public:
     Position getAttack(const Player& player, const Player& enemy) override;
 
     std::vector<Cell*> placeShip(Player& player, SimpleShip::Type type, int size) override;
-
     void displaySettings(const std::string& title, std::vector<Setting*>&) override;
     void showResults(const Player& winner, int roundsPlayed) override;
     void finishWork() override;
 
     void waitForNextPlayer(const Player &player) override;
+
+    ExternalGUI();
+
+private:
+
+    static const int windowHeight = 1000;
+    static const int windowWidth = 1600;
+
+    sf::RenderWindow window;
 };

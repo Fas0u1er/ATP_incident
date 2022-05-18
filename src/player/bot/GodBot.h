@@ -9,7 +9,9 @@ class GodBot : public Bot {
 private:
     explicit GodBot(int index);
 
-    static std::vector<Position> chooseShipCells(Board& board);
+    static std::vector<Position> chooseEnemyShipCells(Board& enemyBoard);
+
+    int assessShipsPositioning(std::vector<Cell*>& newShipCells);
 public:
 
     std::vector<Cell*> getNewShipCells(SimpleShip::Type, int size) override;

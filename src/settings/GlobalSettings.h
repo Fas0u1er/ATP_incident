@@ -9,39 +9,30 @@
 
 class GlobalSettings {
 public:
-    int boardWidth = 10;
+    int boardWidth = 15;
     int boardHeight = 10;
-    int shipsNumber = 4;
-    std::unordered_map<Ship::Type, std::vector <int>> ships = {
-            {Ship::Type::line, {1, 2}},
-            {Ship::Type::square, {4}},
-            {Ship::Type::T, {2}}
+    int islandSize = 16;
+
+    int shipsNumber = 3;
+    std::unordered_map<Ship::Type, std::vector<int>> ships = {
+        {Ship::Type::line, {1}},
+        {Ship::Type::square, {1}},
+        {Ship::Type::T, {1}}
     };
     int playerNumber = 2;
-    std::vector<PlayerSettings> playerSettings{{"Human", PlayerSettings::Type::Human},
-                                               {"God Bot", PlayerSettings::Type::GodBot}};
-
-
-    //    int boardWidth = 8;
-//    int boardHeight = 8;
-//    int shipsNumber = 5;
-//    std::unordered_map<Ship::Type, std::vector <int>> ships = {
-//        {Ship::Type::line, {1, 1, 1, 1}},
-//        {Ship::Type::square, {4}},
-//
-//    };
-//    int playerNumber = 2;
-
-//    std::vector<PlayerSettings> playerSettings;
+    std::vector<PlayerSettings> playerSettings{
+        {"H1", PlayerSettings::Type::Human},
+//        {"H2", PlayerSettings::Type::Human},
+        {"Bot", PlayerSettings::Type::GodBot}
+    };
 
     static GlobalSettings& getInstance();
 
     void resize(int newPlayerNumber);
     GlobalSettings(const GlobalSettings&) = delete;
-    GlobalSettings( GlobalSettings&&) = delete;
+    GlobalSettings(GlobalSettings&&) = delete;
 private:
     GlobalSettings();
-
 
 };
 

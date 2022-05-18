@@ -19,6 +19,19 @@ Position Position::operator*(int k) const {
     answer *= k;
     return answer;
 }
+
+Position& Position::operator/=(int k) {
+    x /= k;
+    y /= k;
+    return *this;
+}
+
+Position Position::operator/(int k) const {
+    auto answer = *this;
+    answer /= k;
+    return answer;
+}
+
 std::ostream& operator<<(std::ostream& os, const Position& position) {
     os << "x: " << position.x << " y: " << position.y;
     return os;
@@ -39,3 +52,14 @@ bool Position::operator!=(const Position& other) const {
 bool Position::operator==(const Position& other) const {
     return x == other.x and y == other.y;
 }
+Position& Position::rotate(bool clockwise) {
+    std::swap(x, y);
+    if (clockwise) {
+        y = -y;
+    } else {
+        x = -x;
+    }
+    return *this;
+}
+
+
